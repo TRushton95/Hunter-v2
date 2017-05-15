@@ -29,6 +29,7 @@ namespace Hunter_v2
         Texture2D playerSprite, blueTileTexture, greenTileTexture;
         GameActor player;
         TileImg[] tileSet;
+        Tile[] map;
 
         public Hunter()
         {
@@ -52,6 +53,12 @@ namespace Hunter_v2
             {
                 new TileImg(0, new GraphicsComponent(blueTileTexture, spriteBatch)),
                 new TileImg(1, new GraphicsComponent(blueTileTexture, spriteBatch))
+            };
+
+            map = new Tile[]
+            {
+                new Tile(new Vector2(0,0), tileSet[0], 0),
+                new Tile(new Vector2(100,0), tileSet[1], 1)
             };
 
 
@@ -123,8 +130,8 @@ namespace Hunter_v2
 
             //REMOVE
             player.draw();
-            tileSet[0].graphicsComponent.draw(new Vector2(0,0));
-            tileSet[1].graphicsComponent.draw(new Vector2(100, 0));
+            map[0].draw();
+            map[1].draw();
 
 
             // TODO: Add your drawing code here

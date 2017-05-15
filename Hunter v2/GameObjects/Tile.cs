@@ -15,7 +15,7 @@ namespace Hunter_v2.GameObjects
         public TileImg flyweightTile { get; set; }
         public int tiletype { get; set; }
 
-        //MISSING - SOME LOGIC TO LINK TILES TO TILEIMG
+        //BUG - LOGIC OF LINKING TILETYPE TO FLYWEIGHTTILE DOESNT SEEM QUITE RIGHT HERE, NOT SURE WHY YET
 
         public Tile(Vector2 position, TileImg flyweightTile, int tiletype)
         {
