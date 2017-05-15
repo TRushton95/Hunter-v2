@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Hunter_v2.Components.Interfaces;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,13 @@ namespace Hunter_v2.GameObjects
 {
     class TileImg
     {
-        Texture2D texture { get; set; }
-        int tiletype { get; set; }
+        public int tiletype { get; set; }
+        public IGraphicsComponent graphicsComponent { get; set; }
 
-        public TileImg(Texture2D texture, int tiletype)
+        public TileImg(int tiletype, IGraphicsComponent graphicsComponent)
         {
-            this.texture = texture;
             this.tiletype = tiletype;
+            this.graphicsComponent = graphicsComponent;
         }
     }
 }

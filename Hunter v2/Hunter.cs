@@ -8,6 +8,7 @@ using Hunter_v2.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 // Keyworks to use for find-in-files
 // MISSING - some code is known to be missing, likely for lack of understanding at the time
@@ -25,8 +26,9 @@ namespace Hunter_v2
         SpriteBatch spriteBatch;
 
         //REMOVE
-        Texture2D playerSprite;
+        Texture2D playerSprite, blueTileTexture, greenTileTexture;
         GameActor player;
+        TileImg[] tileSet;
 
         public Hunter()
         {
@@ -44,7 +46,15 @@ namespace Hunter_v2
         {
             // TODO: Add your initialization logic here
 
+            //REMOVE
             player = new GameActor(new GraphicsComponent(playerSprite, spriteBatch), new InputComponent(), new PositionComponent(), new MovementComponent(), new HealthComponent(100), new RangedWeaponComponent());
+            tileSet = new TileImg[]
+            {
+                new TileImg(0, new GraphicsComponent(blueTileTexture, spriteBatch)),
+                new TileImg(1, new GraphicsComponent(blueTileTexture, spriteBatch))
+            };
+
+
             base.Initialize();
         }
 
@@ -57,10 +67,19 @@ namespace Hunter_v2
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+
+            //REMOVE ALL BELOW HERE
             playerSprite = Content.Load<Texture2D>("squirtle");
-            //REMOVE
             player.graphicsComponent.texture = playerSprite;
             player.graphicsComponent.spriteBatch = spriteBatch;
+
+            blueTileTexture = Content.Load<Texture2D>("BlueTile");
+            tileSet[0].graphicsComponent.texture = blueTileTexture;
+            tileSet[0].graphicsComponent.spriteBatch = spriteBatch;
+
+            greenTileTexture = Content.Load<Texture2D>("GreenTile");
+            tileSet[1].graphicsComponent.texture = greenTileTexture;
+            tileSet[1].graphicsComponent.spriteBatch = spriteBatch;
 
             // TODO: use this.Content to load your game content here
         }
@@ -104,6 +123,9 @@ namespace Hunter_v2
 
             //REMOVE
             player.draw();
+            tileSet[0].graphicsComponent.draw(new Vector2(0,0));
+            tileSet[1].graphicsComponent.draw(new Vector2(100, 0));
+
 
             // TODO: Add your drawing code here
 

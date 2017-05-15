@@ -82,6 +82,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\BlueTile.png" />
+    <Content Include="Content\GreenTile.png" />
     <Content Include="Content\squirtle.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
