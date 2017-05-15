@@ -13,6 +13,17 @@ namespace Hunter_v2.Components.PositionComponent
         public float posX { get; set; }
         public float posY { get; set; }
 
+        //REMOVE - NO NEED FOR AN EMPTY CONSTRUCTOR? FIX LOGIC LATER
+        public PositionComponent()
+        {
+        }
+
+        public PositionComponent(float posX, float posY)
+        {
+            this.posX = posX;
+            this.posY = posY;
+        }
+
         public Vector2 position()
         {
             return new Vector2(posX, posY);

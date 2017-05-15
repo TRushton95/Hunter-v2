@@ -57,8 +57,8 @@ namespace Hunter_v2
 
             map = new Tile[]
             {
-                new Tile(new Vector2(0,0), tileSet[0], 0),
-                new Tile(new Vector2(100,0), tileSet[1], 1)
+                new Tile(new PositionComponent(0,0), tileSet[0], 0),
+                new Tile(new PositionComponent(100,0), tileSet[1], 1)
             };
 
 
@@ -129,9 +129,9 @@ namespace Hunter_v2
             spriteBatch.Begin();
 
             //REMOVE
-            player.draw();
             map[0].draw();
             map[1].draw();
+            player.draw();
 
 
             // TODO: Add your drawing code here

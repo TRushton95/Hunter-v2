@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Hunter_v2.Components.Interfaces;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,15 @@ namespace Hunter_v2.GameObjects
     {
         public const int TILE_SIZE = 20;
 
-        public Vector2 position { get; set; }
+        public IPositionComponent positionComponent { get; set; }
         public TileImg flyweightTile { get; set; }
         public int tiletype { get; set; }
 
         //BUG - LOGIC OF LINKING TILETYPE TO FLYWEIGHTTILE DOESNT SEEM QUITE RIGHT HERE, NOT SURE WHY YET
 
-        public Tile(Vector2 position, TileImg flyweightTile, int tiletype)
+        public Tile(IPositionComponent positionComponent, TileImg flyweightTile, int tiletype)
         {
-            this.position = position;
+            this.positionComponent = positionComponent;
             this.flyweightTile = flyweightTile;
             this.tiletype = tiletype;
         }
@@ -31,7 +32,7 @@ namespace Hunter_v2.GameObjects
 
         public void draw()
         {
-            flyweightTile.draw(position);
+            flyweightTile.draw(positionComponent.position());
         }
     }
 }
