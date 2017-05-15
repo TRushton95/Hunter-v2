@@ -1,4 +1,5 @@
 ﻿using Hunter_v2.Components.Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,11 @@ namespace Hunter_v2.GameObjects
         {
             this.tiletype = tiletype;
             this.graphicsComponent = graphicsComponent;
+        }
+
+        public void draw(Vector2 position)
+        {
+            graphicsComponent.draw(position);
         }
     }
 }
