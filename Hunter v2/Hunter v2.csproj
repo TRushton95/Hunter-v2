@@ -64,8 +64,12 @@
     <Compile Include="Components\MovementComponents\NullMovementComponent.cs" />
     <Compile Include="Components\PositionComponent\NullPositionComponent.cs" />
     <Compile Include="Components\PositionComponent\PositionComponent.cs" />
+    <Compile Include="Components\Interfaces\ISizeComponent.cs" />
+    <Compile Include="Components\SizeComponents\NullSizeComponent.cs" />
+    <Compile Include="Components\SizeComponents\SizeComponent.cs" />
     <Compile Include="Components\WeaponComponents\NullWeaponComponent.cs" />
     <Compile Include="Components\WeaponComponents\RangedWeaponComponent.cs" />
+    <Compile Include="GameObjects\Collision.cs" />
     <Compile Include="GameObjects\Tile.cs" />
     <Compile Include="GameObjects\TileImg.cs" />
     <Compile Include="GameObjects\World.cs" />

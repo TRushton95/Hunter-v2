@@ -3,6 +3,7 @@ using Hunter_v2.Components.HealthComponents;
 using Hunter_v2.Components.InputComponents;
 using Hunter_v2.Components.MovementComponents;
 using Hunter_v2.Components.PositionComponent;
+using Hunter_v2.Components.SizeComponents;
 using Hunter_v2.Components.WeaponComponents;
 using Hunter_v2.GameObjects;
 using Microsoft.Xna.Framework;
@@ -48,7 +49,7 @@ namespace Hunter_v2
             // TODO: Add your initialization logic here
 
             //REMOVE
-            player = new GameActor(new GraphicsComponent(playerSprite, spriteBatch), new InputComponent(), new PositionComponent(), new MovementComponent(), new HealthComponent(100), new RangedWeaponComponent());
+            player = new GameActor(new GraphicsComponent(playerSprite, spriteBatch), new InputComponent(), new SizeComponent(50,50), new PositionComponent(200,200), new MovementComponent(), new HealthComponent(100), new RangedWeaponComponent());
             tileSet = new TileImg[]
             {
                 new TileImg(0, new GraphicsComponent(blueTileTexture, spriteBatch)),
@@ -57,8 +58,8 @@ namespace Hunter_v2
 
             map = new Tile[]
             {
-                new Tile(new PositionComponent(0,0), tileSet[0], 0),
-                new Tile(new PositionComponent(100,0), tileSet[1], 1)
+                new Tile(new SizeComponent(50,50), new PositionComponent(0,0), tileSet[0], 0),
+                new Tile(new SizeComponent(50,50), new PositionComponent(150,0), tileSet[1], 1)
             };
 
 
@@ -76,7 +77,7 @@ namespace Hunter_v2
 
 
             //REMOVE ALL BELOW HERE
-            playerSprite = Content.Load<Texture2D>("squirtle");
+            playerSprite = Content.Load<Texture2D>("GreenTile");
             player.graphicsComponent.texture = playerSprite;
             player.graphicsComponent.spriteBatch = spriteBatch;
 
@@ -112,6 +113,13 @@ namespace Hunter_v2
                 Exit();
 
             player.update();
+
+            //REMOVE
+            if (Collision.collisionCheck(player.positionComponent, player.sizeComponent, map[0].positionComponent, map[0].sizeComponent) ||
+               (Collision.collisionCheck(player.positionComponent, player.sizeComponent, map[1].positionComponent, map[1].sizeComponent)))
+            {
+                Exit();
+            }
 
             // TODO: Add your update logic here
 

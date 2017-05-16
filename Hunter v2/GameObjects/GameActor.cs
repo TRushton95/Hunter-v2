@@ -1,5 +1,6 @@
 ﻿using Hunter_v2.Commands;
 using Hunter_v2.Components.Interfaces;
+using Hunter_v2.Components.SizeComponents;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Hunter_v2.GameObjects
     {
         public IGraphicsComponent graphicsComponent { get; set; }
         public IInputComponent inputComponent { get; set; }
+        public ISizeComponent sizeComponent { get; set; }
         public IPositionComponent positionComponent { get; set; }
         public IMovementComponent movementComponent { get; set; }
         public IHealthComponent healthComponent { get; set; }
@@ -20,11 +22,13 @@ namespace Hunter_v2.GameObjects
         public Command inputCommand { get; set; }
 
         public GameActor(IGraphicsComponent graphicsComponent, IInputComponent inputComponent, 
-                IPositionComponent positionComponent, IMovementComponent movementComponent, 
-                IHealthComponent healthComponent, IWeaponComponent weaponComponent)
+                ISizeComponent sizeComponent, IPositionComponent positionComponent, 
+                IMovementComponent movementComponent, IHealthComponent healthComponent, 
+                IWeaponComponent weaponComponent)
         {
             this.graphicsComponent = graphicsComponent;
             this.inputComponent = inputComponent;
+            this.sizeComponent = sizeComponent;
             this.positionComponent = positionComponent;
             this.movementComponent = movementComponent;
             this.healthComponent = healthComponent;

@@ -2,6 +2,7 @@
 using Hunter_v2.Components.InputComponents;
 using Hunter_v2.Components.Interfaces;
 using Hunter_v2.Components.MovementComponents;
+using Hunter_v2.Components.SizeComponents;
 using Hunter_v2.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,7 +26,7 @@ namespace Hunter_v2.Components.WeaponComponents
         public GameActor Fire(GameActor gameObject)
         {
             //needs some proper allocation here - purely standin for now
-            GameActor projectile = new GameActor(graphicsComponent, new NullInputComponent(), gameObject.positionComponent, new MovementComponent(), new NullHealthComponent(), new NullWeaponComponent());
+            GameActor projectile = new GameActor(graphicsComponent, new NullInputComponent(), new SizeComponent(10,10), gameObject.positionComponent, new MovementComponent(), new NullHealthComponent(), new NullWeaponComponent());
 
             return projectile;
         }

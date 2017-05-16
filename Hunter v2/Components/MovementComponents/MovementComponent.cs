@@ -15,7 +15,8 @@ namespace Hunter_v2.Components.MovementComponents
 
         public MovementComponent()
         {
-
+            this.velX = 0;
+            this.velY = 0;
         }
 
         public void move(IPositionComponent position)
