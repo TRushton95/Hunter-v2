@@ -22,7 +22,7 @@ namespace Hunter_v2.GameObjects
 
         public World(Vector2 mapSize, TileImg[] tileSet, int[,] mapSource, List<GameActor> gameActors)
         {
-            this.mapSize = mapSize;
+            this.mapSize = mapSize; //can probably be determined by tileSet?
             this.tileSet = tileSet;
             this.mapSource = mapSource;
             map = loadMap();
@@ -33,36 +33,25 @@ namespace Hunter_v2.GameObjects
 
         private Tile[,] loadMap()
         {
-            Tile[,] map = null;
+            Tile[,] map = new Tile[(int)mapSize.X, (int)mapSize.Y];
 
-            map = new Tile[(int)mapSize.X, (int)mapSize.Y];
-            //copy the mapSource to the map to know what tiletypes belong where
-            //also assign appropriate positionComponents
+            SizeComponent sizeComponent = new SizeComponent(50, 50);
+
+
             for (int i = 0; i < mapSize.X; i++)
             {
                 for (int j = 0; j < mapSize.Y; j++)
                 {
-                    map[i, j].tiletype = mapSource[i, j];
-                    map[i, j].positionComponent = new PositionComponent(i*50, j*50);
+                    map[i, j] = new Tile(sizeComponent, new PositionComponent(i*50,j*50), matchTileImg(tileSet, mapSource[i,j]), mapSource[i, j]);
                 }
-            }
-
-            //fill out the flyweight tile using the mapped tiletype and the template tileImgs
-            //also assign appropriate positionComponents
-            SizeComponent sizeComponent = new SizeComponent(50, 50);
-            foreach (Tile t in map)
-            {
-                t.flyweightTile = matchTileImg(tileSet, t);
-                t.sizeComponent = sizeComponent;
             }
 
             return map;
         }
 
-        private TileImg matchTileImg(TileImg[] tileSet, Tile t)
+        private TileImg matchTileImg(TileImg[] tileSet, int tileTypeRequired)
         {
             TileImg matchingTileImg;
-            int tileTypeRequired = t.tiletype;
             foreach (TileImg i in tileSet)
             {
                 if (tileTypeRequired == i.tiletype)
@@ -73,6 +62,28 @@ namespace Hunter_v2.GameObjects
             }
 
             return null;
+        }
+
+        public void update()
+        {
+            foreach (GameActor a in gameActors)
+            {
+                a.update();
+            }
+        }
+
+        public void draw()
+        {
+
+            foreach (Tile t in map)
+            {
+                t.draw();
+            }
+
+            foreach (GameActor a in gameActors)
+            {
+                a.draw();
+            }
         }
 
         //MISSING

@@ -32,6 +32,9 @@ namespace Hunter_v2
         GameActor player;
         TileImg[] tileSet;
         Tile[] map;
+        Vector2 mapSize;
+        int[,] mapSource;
+        World world;
 
         public Hunter()
         {
@@ -62,6 +65,26 @@ namespace Hunter_v2
                 new Tile(new SizeComponent(50,50), new PositionComponent(0,0), tileSet[0], 0),
                 new Tile(new SizeComponent(50,50), new PositionComponent(150,0), tileSet[1], 1)
             };
+
+            mapSize = new Vector2(200, 200);
+            mapSource = new int[(int)mapSize.X, (int)mapSize.Y];
+
+            for (int i = 0; i < mapSize.X; i++)
+            {
+                for (int j = 0; j < mapSize.Y; j++)
+                {
+                    if ((i + j) % 2 == 0)
+                    {
+                        mapSource[i, j] = 0;
+                    }
+                    else
+                    {
+                        mapSource[i, j] = 1;
+                    }
+                }
+            }
+
+            world = new World(mapSize, tileSet, mapSource, new List<GameActor>());
 
 
             base.Initialize();
@@ -116,11 +139,13 @@ namespace Hunter_v2
             player.update();
 
             //REMOVE
+            /*
             if (Collision.collisionCheck(player.positionComponent, player.sizeComponent, map[0].positionComponent, map[0].sizeComponent) ||
                (Collision.collisionCheck(player.positionComponent, player.sizeComponent, map[1].positionComponent, map[1].sizeComponent)))
             {
                 Exit();
             }
+            */
 
             // TODO: Add your update logic here
 
@@ -138,8 +163,7 @@ namespace Hunter_v2
             spriteBatch.Begin();
 
             //REMOVE
-            map[0].draw();
-            map[1].draw();
+            world.draw();
             player.draw();
 
 
