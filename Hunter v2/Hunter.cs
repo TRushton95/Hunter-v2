@@ -15,6 +15,7 @@ using System.Collections.Generic;
 // MISSING - some code is known to be missing, likely for lack of understanding at the time
 // BUG - known error in logic
 // REMOVE - some arbitrary code added in, likely for testing purposes that should be removed once it is replaced with actual logic
+// UNSURE - some code that is not well understood enough to know whether it is ideal or optimal
 
 namespace Hunter_v2
 {
