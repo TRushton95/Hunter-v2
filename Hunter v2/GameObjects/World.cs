@@ -17,6 +17,7 @@ namespace Hunter_v2.GameObjects
         public int[,] mapSource { get; set; }
         public List<GameActor> gameActors { get; set; }
         public Tile[,] map { get; set; }
+        public Camera camera { get; set; }
 
         IDisposable cancelObservation;
 
@@ -28,6 +29,9 @@ namespace Hunter_v2.GameObjects
             map = loadMap();
 
             this.gameActors = gameActors;
+            //MISSING - proper logic to assign width and height of window and camera
+            this.camera = new Camera(0, 0, 800, 480 ,10000, 10000);
+            this.camera.setTarget(this.gameActors[0]);
         }
 
 
@@ -70,6 +74,7 @@ namespace Hunter_v2.GameObjects
             {
                 a.update();
             }
+            camera.update();
         }
 
         public void draw()
@@ -77,7 +82,11 @@ namespace Hunter_v2.GameObjects
 
             foreach (Tile t in map)
             {
-                t.draw();
+                if (Collision.collisionCheck(t.positionComponent, t.sizeComponent,
+                    camera.positionComponent, camera.sizeComponent))
+                {
+                    t.draw();
+                }
             }
 
             foreach (GameActor a in gameActors)

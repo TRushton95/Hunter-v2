@@ -69,6 +69,7 @@
     <Compile Include="Components\SizeComponents\SizeComponent.cs" />
     <Compile Include="Components\WeaponComponents\NullWeaponComponent.cs" />
     <Compile Include="Components\WeaponComponents\RangedWeaponComponent.cs" />
+    <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\Collision.cs" />
     <Compile Include="GameObjects\Tile.cs" />
     <Compile Include="GameObjects\TileImg.cs" />
@@ -88,7 +89,7 @@
   <ItemGroup>
     <Content Include="Content\BlueTile.png" />
     <Content Include="Content\GreenTile.png" />
-    <Content Include="Content\squirtle.png" />
+    <Content Include="Content\PurpleTile.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

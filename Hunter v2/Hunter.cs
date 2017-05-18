@@ -29,6 +29,7 @@ namespace Hunter_v2
 
         //REMOVE
         Texture2D playerSprite, blueTileTexture, greenTileTexture;
+        List<GameActor> gameActors;
         GameActor player;
         TileImg[] tileSet;
         Tile[] map;
@@ -83,8 +84,10 @@ namespace Hunter_v2
                     }
                 }
             }
+            gameActors = new List<GameActor>();
+            gameActors.Add(player);
 
-            world = new World(mapSize, tileSet, mapSource, new List<GameActor>());
+            world = new World(mapSize, tileSet, mapSource, gameActors);
 
 
             base.Initialize();
@@ -101,7 +104,7 @@ namespace Hunter_v2
 
 
             //REMOVE ALL BELOW HERE
-            playerSprite = Content.Load<Texture2D>("GreenTile");
+            playerSprite = Content.Load<Texture2D>("PurpleTile");
             player.graphicsComponent.texture = playerSprite;
             player.graphicsComponent.spriteBatch = spriteBatch;
 
@@ -136,7 +139,7 @@ namespace Hunter_v2
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            player.update();
+            world.update();
 
             //REMOVE
             /*
@@ -164,7 +167,6 @@ namespace Hunter_v2
 
             //REMOVE
             world.draw();
-            player.draw();
 
 
             // TODO: Add your drawing code here
