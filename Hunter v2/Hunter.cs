@@ -2,7 +2,7 @@
 using Hunter_v2.Components.HealthComponents;
 using Hunter_v2.Components.InputComponents;
 using Hunter_v2.Components.MovementComponents;
-using Hunter_v2.Components.PositionComponent;
+using Hunter_v2.Components.PositionComponents;
 using Hunter_v2.Components.SizeComponents;
 using Hunter_v2.Components.WeaponComponents;
 using Hunter_v2.GameObjects;
@@ -54,7 +54,7 @@ namespace Hunter_v2
             // TODO: Add your initialization logic here
 
             //REMOVE
-            player = new GameActor(new GraphicsComponent(playerSprite, spriteBatch), new InputComponent(), new SizeComponent(50,50), new PositionComponent(200,200), new MovementComponent(), new HealthComponent(100), new RangedWeaponComponent());
+            player = new GameActor(new GraphicsComponent(playerSprite, spriteBatch), new InputComponent(), new SizeComponent(50,50), new PositionComponent(200,200), new MovementComponent(), new HealthComponent(100), new RangedWeaponComponent(new GraphicsComponent(playerSprite,spriteBatch)));
             tileSet = new TileImg[]
             {
                 new TileImg(0, new GraphicsComponent(blueTileTexture, spriteBatch)),
@@ -107,6 +107,8 @@ namespace Hunter_v2
             playerSprite = Content.Load<Texture2D>("PurpleTile");
             player.graphicsComponent.texture = playerSprite;
             player.graphicsComponent.spriteBatch = spriteBatch;
+            player.weaponComponent.graphicsComponent.texture = playerSprite;
+            player.weaponComponent.graphicsComponent.spriteBatch = spriteBatch;
 
             blueTileTexture = Content.Load<Texture2D>("BlueTile");
             tileSet[0].graphicsComponent.texture = blueTileTexture;

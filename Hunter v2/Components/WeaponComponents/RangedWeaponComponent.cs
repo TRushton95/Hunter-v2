@@ -3,6 +3,7 @@ using Hunter_v2.Components.InputComponents;
 using Hunter_v2.Components.Interfaces;
 using Hunter_v2.Components.MovementComponents;
 using Hunter_v2.Components.SizeComponents;
+using Hunter_v2.Components.PositionComponents;
 using Hunter_v2.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,29 +15,32 @@ using System.Threading.Tasks;
 
 namespace Hunter_v2.Components.WeaponComponents
 {
-    class RangedWeaponComponent : IWeaponComponent, IObservable<GameActor>
+    class RangedWeaponComponent : IWeaponComponent
     {
-        IGraphicsComponent graphicsComponent;
-        IObserver<GameActor> observer;
+        public IGraphicsComponent graphicsComponent { get; set; }
+        public IObserver<GameActor> observer { get; set; }
 
-        public RangedWeaponComponent()
+        //MISSING - proper logic for initialisation projectile graphics
+        public RangedWeaponComponent(IGraphicsComponent graphicsComponent)
         {
-            graphicsComponent = new GraphicsComponent(null, null);
+            this.graphicsComponent = graphicsComponent;
         }
 
-        public GameActor Fire(GameActor gameObject)
+        public void Fire(GameActor gameObject)
         {
+            // UNSURE - it seems that a new position must be created as using gameObjects passes the value byreference rather than byvalue, needs more investigation
+            PositionComponent positionComponent = new PositionComponent(gameObject.positionComponent.posX, gameObject.positionComponent.posY);
             //needs some proper allocation here - purely standin for now
-            GameActor projectile = new GameActor(graphicsComponent, new NullInputComponent(), new SizeComponent(10,10), gameObject.positionComponent, new MovementComponent(), new NullHealthComponent(), new NullWeaponComponent());
+            GameActor projectile = new GameActor(graphicsComponent, new NullInputComponent(), new SizeComponent(50,50), positionComponent, new MovementComponent(), new NullHealthComponent(), new NullWeaponComponent());
+            // REMOVE - requires logic to fire in current facing direction - hopefully implemented with states?
+            projectile.movementComponent.velY = -10;
 
             observer.OnNext(projectile);
-
-            return projectile;
         }
 
         public IDisposable Subscribe(IObserver<GameActor> observer)
         {
-            if (observer==null)
+            if (this.observer==null)
             {
                 this.observer = observer;
             }

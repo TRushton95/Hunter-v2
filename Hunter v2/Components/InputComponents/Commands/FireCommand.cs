@@ -11,7 +11,7 @@ namespace Hunter_v2.Commands
     {
         public override void execute(GameActor gameObject)
         {
-            
+            gameObject.weaponComponent.Fire(gameObject);
         }
     }
 }

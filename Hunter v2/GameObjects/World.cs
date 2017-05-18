@@ -1,5 +1,5 @@
 ﻿using Hunter_v2.Components.Interfaces;
-using Hunter_v2.Components.PositionComponent;
+using Hunter_v2.Components.PositionComponents;
 using Hunter_v2.Components.SizeComponents;
 using Microsoft.Xna.Framework;
 using System;
@@ -19,7 +19,7 @@ namespace Hunter_v2.GameObjects
         public Tile[,] map { get; set; }
         public Camera camera { get; set; }
 
-        IDisposable cancelObservation;
+        List<IDisposable> cancelObservation;
 
         public World(Vector2 mapSize, TileImg[] tileSet, int[,] mapSource, List<GameActor> gameActors)
         {
@@ -32,6 +32,12 @@ namespace Hunter_v2.GameObjects
             //MISSING - proper logic to assign width and height of window and camera
             this.camera = new Camera(0, 0, 800, 480 ,10000, 10000);
             this.camera.setTarget(this.gameActors[0]);
+
+            cancelObservation = new List<IDisposable>();
+            foreach (GameActor g in gameActors)
+            {
+                cancelObservation.Add(g.weaponComponent.Subscribe(this));
+            }
         }
 
 
@@ -70,7 +76,8 @@ namespace Hunter_v2.GameObjects
 
         public void update()
         {
-            foreach (GameActor a in gameActors)
+            //UNSURE - for some reason adding ToList() removes a null exception I do not yet understand
+            foreach (GameActor a in gameActors.ToList())
             {
                 a.update();
             }
@@ -99,6 +106,7 @@ namespace Hunter_v2.GameObjects
         public void OnNext(GameActor gameActor)
         {
             gameActors.Add(gameActor);
+            cancelObservation.Add(gameActor.weaponComponent.Subscribe(this));
         }
 
         public void OnError(Exception error)

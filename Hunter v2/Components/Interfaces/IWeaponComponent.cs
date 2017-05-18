@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace Hunter_v2.Components.Interfaces
 {
-    interface IWeaponComponent
+    interface IWeaponComponent : IObservable<GameActor>
     {
-        GameActor Fire(GameActor gameObject);
+        IGraphicsComponent graphicsComponent { get; set; }
+        IObserver<GameActor> observer { get; set; }
+
+        void Fire(GameActor gameObject);
     }
 }

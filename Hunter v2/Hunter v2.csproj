@@ -62,8 +62,8 @@
     <Compile Include="Components\Interfaces\IWeaponComponent.cs" />
     <Compile Include="Components\MovementComponents\MovementComponent.cs" />
     <Compile Include="Components\MovementComponents\NullMovementComponent.cs" />
-    <Compile Include="Components\PositionComponent\NullPositionComponent.cs" />
-    <Compile Include="Components\PositionComponent\PositionComponent.cs" />
+    <Compile Include="Components\PositionComponents\NullPositionComponent.cs" />
+    <Compile Include="Components\PositionComponents\PositionComponent.cs" />
     <Compile Include="Components\Interfaces\ISizeComponent.cs" />
     <Compile Include="Components\SizeComponents\NullSizeComponent.cs" />
     <Compile Include="Components\SizeComponents\SizeComponent.cs" />

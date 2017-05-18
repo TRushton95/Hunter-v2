@@ -9,6 +9,6 @@ namespace Hunter_v2.Components.Interfaces
 {
     interface IInputComponent
     {
-        Command processInput();
+        List<Command> processInput();
     }
 }

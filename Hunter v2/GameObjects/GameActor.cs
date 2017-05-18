@@ -19,7 +19,7 @@ namespace Hunter_v2.GameObjects
         public IMovementComponent movementComponent { get; set; }
         public IHealthComponent healthComponent { get; set; }
         public IWeaponComponent weaponComponent { get; set; }
-        public Command inputCommand { get; set; }
+        public List<Command> inputCommands { get; set; }
 
         public GameActor(IGraphicsComponent graphicsComponent, IInputComponent inputComponent, 
                 ISizeComponent sizeComponent, IPositionComponent positionComponent, 
@@ -37,8 +37,11 @@ namespace Hunter_v2.GameObjects
 
         public void update()
         {
-            inputCommand = inputComponent.processInput();
-            inputCommand.execute(this);
+            inputCommands = inputComponent.processInput();
+            foreach (Command c in inputCommands)
+            {
+                c.execute(this);
+            }
 
             movementComponent.move(positionComponent);
             healthComponent.deathCheck();

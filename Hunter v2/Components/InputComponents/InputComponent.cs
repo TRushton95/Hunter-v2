@@ -23,6 +23,7 @@ namespace Hunter_v2.Components.InputComponents
         public Command keyD { get; set; }
         public Command mouseLeft { get; set; }
         public Command nullCommand { get; set; }
+        public List<Command> commands { get; set; }
 
         public InputComponent()
         {
@@ -34,23 +35,25 @@ namespace Hunter_v2.Components.InputComponents
             nullCommand = new NullCommand();
         }
 
-        public Command processInput()
+        public List<Command> processInput()
         {
+            commands = new List<Command>();
+
             previousKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
 
             //needs velocity instead, position is limited to one direction at a time (see movement commands)
             if (currentKeyboardState.IsKeyDown(Keys.W)) {
-                return keyW;
+                commands.Add(keyW);
             }
             if (currentKeyboardState.IsKeyDown(Keys.A)) {
-                return keyA;
+                commands.Add(keyA);
             }
             if (currentKeyboardState.IsKeyDown(Keys.S)) {
-                return keyS;
+                commands.Add(keyS);
             }
             if (currentKeyboardState.IsKeyDown(Keys.D)) {
-                return keyD;
+                commands.Add(keyD);
             }
 
             previousMouseState = currentMouseState;
@@ -58,10 +61,15 @@ namespace Hunter_v2.Components.InputComponents
 
             if ((currentMouseState.LeftButton == ButtonState.Pressed) && !(previousMouseState.LeftButton == ButtonState.Pressed))
             {
-                return mouseLeft;
+                commands.Add(mouseLeft);
             }
 
-            return nullCommand;
+            if (commands.Count() == 0)
+            {
+                commands.Add(nullCommand);
+            }
+
+            return commands;
         }
     }
 }

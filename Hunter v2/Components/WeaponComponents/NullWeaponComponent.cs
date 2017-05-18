@@ -10,7 +10,14 @@ namespace Hunter_v2.Components.WeaponComponents
 {
     class NullWeaponComponent : IWeaponComponent
     {
-        public GameActor Fire(GameActor gameObject)
+        public IGraphicsComponent graphicsComponent { get; set; }
+        public IObserver<GameActor> observer { get; set; }
+
+        public void Fire(GameActor gameObject)
+        {
+        }
+
+        public IDisposable Subscribe(IObserver<GameActor> observer)
         {
             return null;
         }

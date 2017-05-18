@@ -1,5 +1,5 @@
 ﻿using Hunter_v2.Components.Interfaces;
-using Hunter_v2.Components.PositionComponent;
+using Hunter_v2.Components.PositionComponents;
 using Hunter_v2.Components.SizeComponents;
 using System;
 using System.Collections.Generic;
