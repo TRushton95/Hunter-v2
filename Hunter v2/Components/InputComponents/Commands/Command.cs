@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Hunter_v2.Commands
 {
-    abstract class Command
+    interface ICommand
     {
-        public Command() { }
+        void execute(GameActor gameObject);
 
-        public virtual void execute(GameActor gameObject) { }
+        string commandType();
     }
 }

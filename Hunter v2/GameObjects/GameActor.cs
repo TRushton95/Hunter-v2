@@ -1,4 +1,7 @@
 ﻿using Hunter_v2.Commands;
+using Hunter_v2.Components.GameActorStates;
+using Hunter_v2.Components.GameActorStates.ControlStates;
+using Hunter_v2.Components.GameActorStates.RecoveryStates;
 using Hunter_v2.Components.Interfaces;
 using Hunter_v2.Components.SizeComponents;
 using Microsoft.Xna.Framework;
@@ -19,7 +22,10 @@ namespace Hunter_v2.GameObjects
         public IMovementComponent movementComponent { get; set; }
         public IHealthComponent healthComponent { get; set; }
         public IWeaponComponent weaponComponent { get; set; }
-        public List<Command> inputCommands { get; set; }
+        public List<ICommand> inputCommands { get; set; }
+        public IGameActorState controlState { get; set; }
+        public IGameActorState recoveryState { get; set; }
+        public IGameActorState newState { get; set; }
 
         public GameActor(IGraphicsComponent graphicsComponent, IInputComponent inputComponent, 
                 ISizeComponent sizeComponent, IPositionComponent positionComponent, 
@@ -33,14 +39,23 @@ namespace Hunter_v2.GameObjects
             this.movementComponent = movementComponent;
             this.healthComponent = healthComponent;
             this.weaponComponent = weaponComponent;
+
+            this.controlState = new WalkingState();
+            this.recoveryState = new UnharmedState();
         }
 
         public void update()
         {
+            //TO BE REPLACED BY STATES (BELOW)
             inputCommands = inputComponent.processInput();
-            foreach (Command c in inputCommands)
+
+            foreach (ICommand c in inputCommands)
             {
-                c.execute(this);
+                newState = controlState.processInput(this, c);
+                if (newState != null)
+                {
+                    controlState = newState;
+                }
             }
 
             movementComponent.move(positionComponent);

@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace Hunter_v2.Commands
 {
-    class NullCommand : Command
+    class NullCommand : ICommand
     {
-        public override void execute(GameActor gameObject)
+        public void execute(GameActor gameObject)
         {
 
+        }
+
+        public string commandType()
+        {
+            return "Null";
         }
     }
 }

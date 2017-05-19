@@ -17,13 +17,13 @@ namespace Hunter_v2.Components.InputComponents
         public MouseState currentMouseState { get; set; }
         public MouseState previousMouseState { get; set; }
 
-        public Command keyW { get; set; }
-        public Command keyA { get; set; }
-        public Command keyS { get; set; }
-        public Command keyD { get; set; }
-        public Command mouseLeft { get; set; }
-        public Command nullCommand { get; set; }
-        public List<Command> commands { get; set; }
+        public ICommand keyW { get; set; }
+        public ICommand keyA { get; set; }
+        public ICommand keyS { get; set; }
+        public ICommand keyD { get; set; }
+        public ICommand mouseLeft { get; set; }
+        public ICommand nullCommand { get; set; }
+        public List<ICommand> commands { get; set; }
 
         public InputComponent()
         {
@@ -35,9 +35,9 @@ namespace Hunter_v2.Components.InputComponents
             nullCommand = new NullCommand();
         }
 
-        public List<Command> processInput()
+        public List<ICommand> processInput()
         {
-            commands = new List<Command>();
+            commands = new List<ICommand>();
 
             previousKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();

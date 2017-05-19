@@ -47,3 +47,4 @@ C:\GitHub\Hunter-v2\Hunter v2\bin\Windows\x86\Debug\SharpDX.XInput.xml
 C:\GitHub\Hunter-v2\Hunter v2\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 C:\GitHub\Hunter-v2\Hunter v2\obj\x86\Debug\Hunter v2.exe
 C:\GitHub\Hunter-v2\Hunter v2\obj\x86\Debug\Hunter v2.pdb
+C:\GitHub\Hunter-v2\Hunter v2\obj\x86\Debug\Hunter v2.csprojResolveAssemblyReference.cache

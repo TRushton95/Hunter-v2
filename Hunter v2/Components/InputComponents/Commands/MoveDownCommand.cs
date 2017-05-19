@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace Hunter_v2.Commands
 {
-    class MoveDownCommand : Command
+    class MoveDownCommand : ICommand
     {
-        public override void execute(GameActor gameObject)
+        public void execute(GameActor gameObject)
         {
             gameObject.positionComponent.posY += 5;
+        }
+
+        public string commandType()
+        {
+            return "MoveDown";
         }
     }
 }

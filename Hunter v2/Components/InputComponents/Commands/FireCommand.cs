@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace Hunter_v2.Commands
 {
-    class FireCommand : Command
+    class FireCommand : ICommand
     {
-        public override void execute(GameActor gameObject)
+        public void execute(GameActor gameObject)
         {
             gameObject.weaponComponent.Fire(gameObject);
+        }
+
+        public string commandType()
+        {
+            return "Fire";
         }
     }
 }

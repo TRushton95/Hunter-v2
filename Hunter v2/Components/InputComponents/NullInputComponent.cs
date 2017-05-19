@@ -15,9 +15,9 @@ namespace Hunter_v2.Components.InputComponents
 
         }
 
-        public List<Command> processInput()
+        public List<ICommand> processInput()
         {
-            List<Command> commands = new List<Command>();
+            List<ICommand> commands = new List<ICommand>();
             commands.Add(new NullCommand());
             return commands;
         }
