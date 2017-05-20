@@ -13,6 +13,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hunter_v2.Components.DirectionComponents;
+using Hunter_v2.Components.CollisionComponents.CollisionActions;
+using Hunter_v2.Components.CollisionComponents;
 
 namespace Hunter_v2.Components.WeaponComponents
 {
@@ -54,7 +56,7 @@ namespace Hunter_v2.Components.WeaponComponents
             //needs some proper allocation here - purely standin for now
             GameActor projectile = new GameActor(graphicsComponent, new NullInputComponent(), new SizeComponent(50,50),
                 positionComponent, new MovementComponent(), new NullHealthComponent(), new NullWeaponComponent(),
-                new DirectionComponent(gameObject.directionComponent.currentDirection));
+                new DirectionComponent(gameObject.directionComponent.currentDirection), new CollisionComponent(new DamageCollisionAction(1)));
             // REMOVE - requires logic to fire in current facing direction - hopefully implemented with states?
             projectile.movementComponent.velY = velY;
             projectile.movementComponent.velX = velX;

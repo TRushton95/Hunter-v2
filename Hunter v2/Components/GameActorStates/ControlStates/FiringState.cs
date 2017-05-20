@@ -18,7 +18,7 @@ namespace Hunter_v2.Components.GameActorStates.ControlStates
         {
             //MISSING - proper logic for assigning recovery time based on attack type
             timer = new Stopwatch();
-            recoveryTime = 250;
+            recoveryTime = 500;
         }
 
         public IGameActorControlState processInput(GameActor actor, ICommand c)

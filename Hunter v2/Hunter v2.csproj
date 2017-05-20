@@ -41,6 +41,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components\CollisionComponents\CollisionActions\BlockCollisionAction.cs" />
+    <Compile Include="Components\CollisionComponents\CollisionActions\CollisionAction.cs" />
+    <Compile Include="Components\CollisionComponents\CollisionActions\DamageCollisionAction.cs" />
+    <Compile Include="Components\CollisionComponents\CollisionComponent.cs" />
     <Compile Include="Components\DirectionComponents\DirectionComponent.cs" />
     <Compile Include="Components\DirectionComponents\NullDirectionComponent.cs" />
     <Compile Include="Components\GameActorStates\ControlStates\FiringState.cs" />
@@ -63,6 +67,7 @@
     <Compile Include="Components\HealthComponents\HealthComponent.cs" />
     <Compile Include="Components\InputComponents\InputComponent.cs" />
     <Compile Include="Components\InputComponents\NullInputComponent.cs" />
+    <Compile Include="Components\Interfaces\ICollisionComponent.cs" />
     <Compile Include="Components\Interfaces\IDirectionComponent.cs" />
     <Compile Include="Components\Interfaces\IGraphicsComponent.cs" />
     <Compile Include="Components\Interfaces\IHealthComponent.cs" />
@@ -72,6 +77,7 @@
     <Compile Include="Components\Interfaces\IWeaponComponent.cs" />
     <Compile Include="Components\MovementComponents\MovementComponent.cs" />
     <Compile Include="Components\MovementComponents\NullMovementComponent.cs" />
+    <Compile Include="Components\NullCollisionComponent.cs" />
     <Compile Include="Components\PositionComponents\NullPositionComponent.cs" />
     <Compile Include="Components\PositionComponents\PositionComponent.cs" />
     <Compile Include="Components\Interfaces\ISizeComponent.cs" />
@@ -100,6 +106,7 @@
     <Content Include="Content\BlueTile.png" />
     <Content Include="Content\GreenTile.png" />
     <Content Include="Content\PurpleTile.png" />
+    <Content Include="Content\RedTile.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

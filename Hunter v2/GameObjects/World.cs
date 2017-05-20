@@ -1,4 +1,6 @@
-﻿using Hunter_v2.Components.Interfaces;
+﻿using Hunter_v2.Components.CollisionComponents;
+using Hunter_v2.Components.CollisionComponents.CollisionActions;
+using Hunter_v2.Components.Interfaces;
 using Hunter_v2.Components.PositionComponents;
 using Hunter_v2.Components.SizeComponents;
 using Microsoft.Xna.Framework;
@@ -40,7 +42,56 @@ namespace Hunter_v2.GameObjects
             }
         }
 
+        public void update()
+        {
+            //UNSURE - for some reason adding ToList() removes a null exception I do not yet understand
+            foreach (GameActor gameActor in gameActors.ToList())
+            {
+                gameActor.update();
+            }
 
+            //collision check - avoids duplicate detections
+            for (int i = 0; i < gameActors.Count(); i++)
+            {
+                for (int j = i+1; j < gameActors.Count(); j++)
+                {
+                    if (i != j)
+                    {
+                        Collision.collisionCheck(gameActors[i].positionComponent, gameActors[i].sizeComponent,
+                            gameActors[j].positionComponent, gameActors[j].sizeComponent);
+                        
+                    }
+                }
+            }
+
+            if (Collision.collisionCheck(gameActors[0].positionComponent, gameActors[0].sizeComponent, map[0,0].positionComponent, map[0,0].sizeComponent))
+            {
+                gameActors[0].collisionComponet.RecieveCollisionAction(map[0,0].collisionComponent.SendCollisionAction(), gameActors[0]);
+            }
+
+            camera.update();
+        }
+
+        public void draw()
+        {
+
+            foreach (Tile t in map)
+            {
+                if (Collision.collisionCheck(t.positionComponent, t.sizeComponent,
+                    camera.positionComponent, camera.sizeComponent))
+                {
+                    t.draw(camera.positionComponent.position());
+                }
+            }
+
+            foreach (GameActor a in gameActors)
+            {
+                a.draw(camera.positionComponent.position());
+            }
+        }
+
+
+        //world building functions
         private Tile[,] loadMap()
         {
             Tile[,] map = new Tile[(int)mapSize.X, (int)mapSize.Y];
@@ -52,7 +103,7 @@ namespace Hunter_v2.GameObjects
             {
                 for (int j = 0; j < mapSize.Y; j++)
                 {
-                    map[i, j] = new Tile(sizeComponent, new PositionComponent(i*50,j*50), matchTileImg(tileSet, mapSource[i,j]), mapSource[i, j]);
+                    map[i, j] = new Tile(sizeComponent, new PositionComponent(i * 50, j * 50), new CollisionComponent(new BlockCollisionAction()), matchTileImg(tileSet, mapSource[i, j]), mapSource[i, j]);
                 }
             }
 
@@ -74,33 +125,6 @@ namespace Hunter_v2.GameObjects
             return null;
         }
 
-        public void update()
-        {
-            //UNSURE - for some reason adding ToList() removes a null exception I do not yet understand
-            foreach (GameActor a in gameActors.ToList())
-            {
-                a.update();
-            }
-            camera.update();
-        }
-
-        public void draw()
-        {
-
-            foreach (Tile t in map)
-            {
-                if (Collision.collisionCheck(t.positionComponent, t.sizeComponent,
-                    camera.positionComponent, camera.sizeComponent))
-                {
-                    t.draw(camera.positionComponent.position());
-                }
-            }
-
-            foreach (GameActor a in gameActors)
-            {
-                a.draw(camera.positionComponent.position());
-            }
-        }
 
         //MISSING
         public void OnNext(GameActor gameActor)

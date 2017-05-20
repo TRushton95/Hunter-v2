@@ -1,4 +1,6 @@
 ﻿using Hunter_v2.Components;
+using Hunter_v2.Components.CollisionComponents;
+using Hunter_v2.Components.CollisionComponents.CollisionActions;
 using Hunter_v2.Components.DirectionComponents;
 using Hunter_v2.Components.HealthComponents;
 using Hunter_v2.Components.InputComponents;
@@ -29,11 +31,10 @@ namespace Hunter_v2
         SpriteBatch spriteBatch;
 
         //REMOVE
-        Texture2D playerSprite, blueTileTexture, greenTileTexture;
+        Texture2D playerSprite, projectileTexture, blueTileTexture, greenTileTexture;
         List<GameActor> gameActors;
         GameActor player;
         TileImg[] tileSet;
-        Tile[] map;
         Vector2 mapSize;
         int[,] mapSource;
         World world;
@@ -55,17 +56,15 @@ namespace Hunter_v2
             // TODO: Add your initialization logic here
 
             //REMOVE
-            player = new GameActor(new GraphicsComponent(playerSprite, spriteBatch), new InputComponent(), new SizeComponent(50,50), new PositionComponent(200,200), new MovementComponent(), new HealthComponent(100), new RangedWeaponComponent(new GraphicsComponent(playerSprite,spriteBatch)), new DirectionComponent());
+            player = new GameActor(new GraphicsComponent(playerSprite, spriteBatch), new InputComponent(), 
+                    new SizeComponent(50,50), new PositionComponent(200,200), new MovementComponent(), 
+                    new HealthComponent(100), new RangedWeaponComponent(new GraphicsComponent(playerSprite,spriteBatch)), 
+                    new DirectionComponent(), new CollisionComponent(new DamageCollisionAction(1)));
+
             tileSet = new TileImg[]
             {
                 new TileImg(0, new GraphicsComponent(blueTileTexture, spriteBatch)),
                 new TileImg(1, new GraphicsComponent(blueTileTexture, spriteBatch))
-            };
-
-            map = new Tile[]
-            {
-                new Tile(new SizeComponent(50,50), new PositionComponent(0,0), tileSet[0], 0),
-                new Tile(new SizeComponent(50,50), new PositionComponent(150,0), tileSet[1], 1)
             };
 
             mapSize = new Vector2(200, 200);
@@ -108,7 +107,9 @@ namespace Hunter_v2
             playerSprite = Content.Load<Texture2D>("PurpleTile");
             player.graphicsComponent.texture = playerSprite;
             player.graphicsComponent.spriteBatch = spriteBatch;
-            player.weaponComponent.graphicsComponent.texture = playerSprite;
+
+            projectileTexture = Content.Load<Texture2D>("RedTile");
+            player.weaponComponent.graphicsComponent.texture = projectileTexture;
             player.weaponComponent.graphicsComponent.spriteBatch = spriteBatch;
 
             blueTileTexture = Content.Load<Texture2D>("BlueTile");

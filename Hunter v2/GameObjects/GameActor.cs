@@ -23,6 +23,7 @@ namespace Hunter_v2.GameObjects
         public IHealthComponent healthComponent { get; set; }
         public IWeaponComponent weaponComponent { get; set; }
         public IDirectionComponent directionComponent { get; set; }
+        public ICollisionComponent collisionComponet { get; set; }
         public List<ICommand> inputCommands { get; set; }
         public IGameActorControlState controlState { get; set; }
         public IGameActorRecoveryState recoveryState { get; set; }
@@ -32,7 +33,8 @@ namespace Hunter_v2.GameObjects
         public GameActor(IGraphicsComponent graphicsComponent, IInputComponent inputComponent, 
                 ISizeComponent sizeComponent, IPositionComponent positionComponent, 
                 IMovementComponent movementComponent, IHealthComponent healthComponent, 
-                IWeaponComponent weaponComponent, IDirectionComponent directionComponent)
+                IWeaponComponent weaponComponent, IDirectionComponent directionComponent,
+                ICollisionComponent collisionComponet)
         {
             this.graphicsComponent = graphicsComponent;
             this.inputComponent = inputComponent;
@@ -42,6 +44,7 @@ namespace Hunter_v2.GameObjects
             this.healthComponent = healthComponent;
             this.weaponComponent = weaponComponent;
             this.directionComponent = directionComponent;
+            this.collisionComponet = collisionComponet;
 
             this.controlState = new WalkingState();
             this.recoveryState = new UnharmedState();
@@ -64,6 +67,17 @@ namespace Hunter_v2.GameObjects
             }
 
             movementComponent.move(positionComponent);
+
+            //MISSING - logic to exchange CollisionActions based on collision
+
+            newRecoveryState = recoveryState.processInput(this);
+            if (newRecoveryState != null)
+            {
+                recoveryState.exit(this);
+                recoveryState = newRecoveryState;
+                recoveryState.enter(this);
+            }
+
             healthComponent.deathCheck();
         }
 
