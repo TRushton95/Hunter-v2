@@ -67,7 +67,7 @@ namespace Hunter_v2
                 new TileImg(1, new GraphicsComponent(blueTileTexture, spriteBatch))
             };
 
-            mapSize = new Vector2(200, 200);
+            mapSize = new Vector2(1200, 800);
             mapSource = new int[(int)mapSize.X, (int)mapSize.Y];
 
             for (int i = 0; i < mapSize.X; i++)

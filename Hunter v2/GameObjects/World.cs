@@ -31,8 +31,8 @@ namespace Hunter_v2.GameObjects
             map = loadMap();
 
             this.gameActors = gameActors;
-            //MISSING - proper logic to assign width and height of window and camera
-            this.camera = new Camera(0, 0, 800, 480 ,2000, 2000);
+            //MISSING - proper logic to assign width and height of world and camera
+            this.camera = new Camera(0, 0, 800, 480 ,1200, 800);
             this.camera.setTarget(this.gameActors[0]);
 
             cancelObservation = new List<IDisposable>();
@@ -48,6 +48,7 @@ namespace Hunter_v2.GameObjects
             foreach (GameActor gameActor in gameActors.ToList())
             {
                 gameActor.update();
+                boundaryCheck(gameActor);
             }
 
             //collision check - avoids duplicate detections
@@ -123,6 +124,26 @@ namespace Hunter_v2.GameObjects
             }
 
             return null;
+        }
+
+        private void boundaryCheck(GameActor gameActor)
+        {
+            if (gameActor.positionComponent.posX < 0)
+            {
+                gameActor.positionComponent.posX = 0;
+            }
+            if (gameActor.positionComponent.posY < 0)
+            {
+                gameActor.positionComponent.posY = 0;
+            }
+            if (gameActor.positionComponent.posX > mapSize.X - gameActor.sizeComponent.width)
+            {
+                gameActor.positionComponent.posX = mapSize.X - gameActor.sizeComponent.width;
+            }
+            if (gameActor.positionComponent.posY > mapSize.Y - gameActor.sizeComponent.height)
+            {
+                gameActor.positionComponent.posY = mapSize.Y - gameActor.sizeComponent.height;
+            }
         }
 
 
