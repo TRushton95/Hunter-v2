@@ -30,7 +30,7 @@ namespace Hunter_v2.GameObjects
 
             this.gameActors = gameActors;
             //MISSING - proper logic to assign width and height of window and camera
-            this.camera = new Camera(0, 0, 800, 480 ,10000, 10000);
+            this.camera = new Camera(0, 0, 800, 480 ,2000, 2000);
             this.camera.setTarget(this.gameActors[0]);
 
             cancelObservation = new List<IDisposable>();
@@ -92,13 +92,13 @@ namespace Hunter_v2.GameObjects
                 if (Collision.collisionCheck(t.positionComponent, t.sizeComponent,
                     camera.positionComponent, camera.sizeComponent))
                 {
-                    t.draw();
+                    t.draw(camera.positionComponent.position());
                 }
             }
 
             foreach (GameActor a in gameActors)
             {
-                a.draw();
+                a.draw(camera.positionComponent.position());
             }
         }
 

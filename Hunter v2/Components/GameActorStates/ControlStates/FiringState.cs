@@ -5,13 +5,34 @@ using System.Text;
 using System.Threading.Tasks;
 using Hunter_v2.Commands;
 using Hunter_v2.GameObjects;
+using System.Diagnostics;
 
 namespace Hunter_v2.Components.GameActorStates.ControlStates
 {
-    class FiringState : IGameActorState
+    class FiringState : IGameActorControlState
     {
-        public IGameActorState processInput(GameActor actor, ICommand c)
+        private Stopwatch timer;
+        double recoveryTime;
+
+        public FiringState()
         {
+            //MISSING - proper logic for assigning recovery time based on attack type
+            timer = new Stopwatch();
+            recoveryTime = 250;
+        }
+
+        public IGameActorControlState processInput(GameActor actor, ICommand c)
+        {
+            if (c.commandType() != "Fire")
+            {
+                c.execute(actor);
+            }
+
+            if (timer.ElapsedMilliseconds >= recoveryTime)
+            {
+                return new WalkingState();
+            }
+
             return null;
         }
 
@@ -19,14 +40,15 @@ namespace Hunter_v2.Components.GameActorStates.ControlStates
         {
 
         }
-        public void enter()
-        {
 
+        public void enter(GameActor actor)
+        {
+            timer.Start();
         }
 
-        public void exit()
+        public void exit(GameActor actor)
         {
-
+            timer.Stop();
         }
     }
 }

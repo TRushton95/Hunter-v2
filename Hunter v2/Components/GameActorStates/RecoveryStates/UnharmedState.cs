@@ -9,10 +9,10 @@ using Hunter_v2.Components.GameActorStates.ControlStates;
 
 namespace Hunter_v2.Components.GameActorStates.RecoveryStates
 {
-    class UnharmedState : IGameActorState
+    class UnharmedState : IGameActorRecoveryState
     {
 
-        public IGameActorState processInput(GameActor actor, ICommand c)
+        public IGameActorRecoveryState processInput(GameActor actor)
         {
             return null;
         }
@@ -22,12 +22,12 @@ namespace Hunter_v2.Components.GameActorStates.RecoveryStates
 
         }
 
-        public void enter()
+        public void enter(GameActor actor)
         {
 
         }
 
-        public void exit()
+        public void exit(GameActor actor)
         {
 
         }

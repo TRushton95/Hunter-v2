@@ -10,18 +10,18 @@ using Hunter_v2.Components.GameActorStates.RecoveryStates;
 
 namespace Hunter_v2.Components.GameActorStates
 {
-    class HitState : IGameActorState
+    class HitState : IGameActorRecoveryState
     {
-        Stopwatch timer;
-        int recoveryTime;
+        private Stopwatch timer;
+        double recoveryTime;
 
         public HitState()
         {
             timer = new Stopwatch();
-            recoveryTime = 2000; //2 seconds
+            recoveryTime = 1000; //2 seconds
         }
 
-        public IGameActorState processInput(GameActor actor, ICommand c)
+        public IGameActorRecoveryState processInput(GameActor actor)
         {
             if (timer.ElapsedMilliseconds >= recoveryTime)
             {
@@ -35,12 +35,12 @@ namespace Hunter_v2.Components.GameActorStates
             //should be state specific logic here
         }
 
-        public void enter()
+        public void enter(GameActor actor)
         {
             timer.Start();
         }
 
-        public void exit()
+        public void exit(GameActor actor)
         {
             timer.Stop();
         }

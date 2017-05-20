@@ -8,9 +8,9 @@ using Hunter_v2.GameObjects;
 
 namespace Hunter_v2.Components.GameActorStates.ControlStates
 {
-    class TalkingState : IGameActorState
+    class TalkingState : IGameActorControlState
     {
-        public IGameActorState processInput(GameActor actor, ICommand c)
+        public IGameActorControlState processInput(GameActor actor, ICommand c)
         {
             return null;
         }
@@ -19,12 +19,12 @@ namespace Hunter_v2.Components.GameActorStates.ControlStates
         {
 
         }
-        public void enter()
+        public void enter(GameActor actor)
         {
 
         }
 
-        public void exit()
+        public void exit(GameActor actor)
         {
 
         }

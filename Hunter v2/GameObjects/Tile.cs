@@ -33,9 +33,9 @@ namespace Hunter_v2.GameObjects
             return TILE_SIZE;
         }
 
-        public void draw()
+        public void draw(Vector2 offset)
         {
-            flyweightTile.draw(positionComponent.position());
+            flyweightTile.draw(positionComponent.position() - offset);
         }
     }
 }

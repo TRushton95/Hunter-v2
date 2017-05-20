@@ -22,15 +22,17 @@ namespace Hunter_v2.GameObjects
         public IMovementComponent movementComponent { get; set; }
         public IHealthComponent healthComponent { get; set; }
         public IWeaponComponent weaponComponent { get; set; }
+        public IDirectionComponent directionComponent { get; set; }
         public List<ICommand> inputCommands { get; set; }
-        public IGameActorState controlState { get; set; }
-        public IGameActorState recoveryState { get; set; }
-        public IGameActorState newState { get; set; }
+        public IGameActorControlState controlState { get; set; }
+        public IGameActorRecoveryState recoveryState { get; set; }
+        public IGameActorControlState newControlState { get; set; }
+        public IGameActorRecoveryState newRecoveryState { get; set; }
 
         public GameActor(IGraphicsComponent graphicsComponent, IInputComponent inputComponent, 
                 ISizeComponent sizeComponent, IPositionComponent positionComponent, 
                 IMovementComponent movementComponent, IHealthComponent healthComponent, 
-                IWeaponComponent weaponComponent)
+                IWeaponComponent weaponComponent, IDirectionComponent directionComponent)
         {
             this.graphicsComponent = graphicsComponent;
             this.inputComponent = inputComponent;
@@ -39,6 +41,7 @@ namespace Hunter_v2.GameObjects
             this.movementComponent = movementComponent;
             this.healthComponent = healthComponent;
             this.weaponComponent = weaponComponent;
+            this.directionComponent = directionComponent;
 
             this.controlState = new WalkingState();
             this.recoveryState = new UnharmedState();
@@ -46,15 +49,17 @@ namespace Hunter_v2.GameObjects
 
         public void update()
         {
-            //TO BE REPLACED BY STATES (BELOW)
+
             inputCommands = inputComponent.processInput();
 
             foreach (ICommand c in inputCommands)
             {
-                newState = controlState.processInput(this, c);
-                if (newState != null)
+                newControlState = controlState.processInput(this, c);
+                if (newControlState != null)
                 {
-                    controlState = newState;
+                    controlState.exit(this);
+                    controlState = newControlState;
+                    controlState.enter(this);
                 }
             }
 
@@ -62,9 +67,9 @@ namespace Hunter_v2.GameObjects
             healthComponent.deathCheck();
         }
 
-        public void draw()
+        public void draw(Vector2 offset)
         {
-            graphicsComponent.draw(positionComponent.position());
+            graphicsComponent.draw(positionComponent.position() - offset);
         }
 
     }

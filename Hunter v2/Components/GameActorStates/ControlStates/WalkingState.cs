@@ -9,7 +9,7 @@ using Hunter_v2.Components.GameActorStates.ControlStates;
 
 namespace Hunter_v2.Components.GameActorStates
 {
-    class WalkingState : IGameActorState
+    class WalkingState : IGameActorControlState
     {
 
         public WalkingState()
@@ -17,9 +17,30 @@ namespace Hunter_v2.Components.GameActorStates
 
         }
 
-        public IGameActorState processInput(GameActor actor, ICommand c)
+        public IGameActorControlState processInput(GameActor actor, ICommand c)
         {
             c.execute(actor);
+
+            if (c.commandType() == "Fire")
+            {
+                return new FiringState();
+            }
+            else if (c.commandType() == "MoveUp")
+            {
+                actor.directionComponent.currentDirection = 0;
+            }
+            else if (c.commandType() == "MoveLeft")
+            {
+                actor.directionComponent.currentDirection = 1;
+            }
+            else if (c.commandType() == "MoveDown")
+            {
+                actor.directionComponent.currentDirection = 2;
+            }
+            else if (c.commandType() == "MoveRight")
+            {
+                actor.directionComponent.currentDirection = 3;
+            }
 
             return null;
         }
@@ -29,12 +50,12 @@ namespace Hunter_v2.Components.GameActorStates
 
         }
 
-        public void enter()
+        public void enter(GameActor actor)
         {
 
         }
 
-        public void exit()
+        public void exit(GameActor actor)
         {
 
         }

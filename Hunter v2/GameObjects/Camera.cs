@@ -44,8 +44,8 @@ namespace Hunter_v2.GameObjects
         {
             if (target != null)
             {
-                positionComponent.posX = (target.positionComponent.posX + (target.sizeComponent.width/2)) - sizeComponent.width;
-                positionComponent.posY = (target.positionComponent.posY + (target.sizeComponent.height/2)) - sizeComponent.height;
+                positionComponent.posX = (target.positionComponent.posX + (target.sizeComponent.width/2)) - (sizeComponent.width/2);
+                positionComponent.posY = (target.positionComponent.posY + (target.sizeComponent.height/2)) - (sizeComponent.height/2);
             }
             else
             {

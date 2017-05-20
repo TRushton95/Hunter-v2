@@ -1,4 +1,5 @@
 ﻿using Hunter_v2.Components;
+using Hunter_v2.Components.DirectionComponents;
 using Hunter_v2.Components.HealthComponents;
 using Hunter_v2.Components.InputComponents;
 using Hunter_v2.Components.MovementComponents;
@@ -54,7 +55,7 @@ namespace Hunter_v2
             // TODO: Add your initialization logic here
 
             //REMOVE
-            player = new GameActor(new GraphicsComponent(playerSprite, spriteBatch), new InputComponent(), new SizeComponent(50,50), new PositionComponent(200,200), new MovementComponent(), new HealthComponent(100), new RangedWeaponComponent(new GraphicsComponent(playerSprite,spriteBatch)));
+            player = new GameActor(new GraphicsComponent(playerSprite, spriteBatch), new InputComponent(), new SizeComponent(50,50), new PositionComponent(200,200), new MovementComponent(), new HealthComponent(100), new RangedWeaponComponent(new GraphicsComponent(playerSprite,spriteBatch)), new DirectionComponent());
             tileSet = new TileImg[]
             {
                 new TileImg(0, new GraphicsComponent(blueTileTexture, spriteBatch)),

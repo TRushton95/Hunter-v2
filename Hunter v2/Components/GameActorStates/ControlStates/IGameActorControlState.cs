@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Hunter_v2.Components.GameActorStates.ControlStates
 {
-    interface IGameActorState
+    interface IGameActorControlState
     {
-        IGameActorState processInput(GameActor actor, ICommand c);
+        IGameActorControlState processInput(GameActor actor, ICommand c);
 
         void update(GameActor actor);
 
-        void enter();
+        void enter(GameActor actor);
 
-        void exit();
+        void exit(GameActor actor);
     }
 }
