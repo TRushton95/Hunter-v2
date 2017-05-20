@@ -41,7 +41,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Components\CollisionComponents\CollisionActions\BlockCollisionAction.cs" />
     <Compile Include="Components\CollisionComponents\CollisionActions\CollisionAction.cs" />
     <Compile Include="Components\CollisionComponents\CollisionActions\DamageCollisionAction.cs" />
     <Compile Include="Components\CollisionComponents\CollisionComponent.cs" />
@@ -65,6 +64,8 @@
     <Compile Include="Components\InputComponents\Commands\MoveUpCommand.cs" />
     <Compile Include="Components\InputComponents\Commands\NullCommand.cs" />
     <Compile Include="Components\HealthComponents\HealthComponent.cs" />
+    <Compile Include="Components\InputComponents\Commands\StopHorizontalCommand.cs" />
+    <Compile Include="Components\InputComponents\Commands\StopVerticalCommand.cs" />
     <Compile Include="Components\InputComponents\InputComponent.cs" />
     <Compile Include="Components\InputComponents\NullInputComponent.cs" />
     <Compile Include="Components\Interfaces\ICollisionComponent.cs" />

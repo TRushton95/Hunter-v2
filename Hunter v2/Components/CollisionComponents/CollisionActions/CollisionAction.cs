@@ -9,6 +9,8 @@ namespace Hunter_v2.Components.CollisionComponents
 {
     interface CollisionAction
     {
+        //BUG - inherent limitation that only damage can be processed
+        //due to the combined nature of command pattern and states
         void execute(GameActor actor);
 
         string actionType();

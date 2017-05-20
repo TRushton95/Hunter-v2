@@ -9,6 +9,7 @@ namespace Hunter_v2.Components.CollisionComponents.CollisionActions
 {
     class DamageCollisionAction : CollisionAction
     {
+
         public int damage { get; set; }
 
         public DamageCollisionAction(int damage)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hunter_v2.Commands
 {
-    class NullCommand : ICommand
+    class NullCommand : Command
     {
         public void execute(GameActor gameObject)
         {

@@ -10,7 +10,7 @@ namespace Hunter_v2.Components.GameActorStates.ControlStates
 {
     interface IGameActorControlState
     {
-        IGameActorControlState processInput(GameActor actor, ICommand c);
+        IGameActorControlState processInput(GameActor actor, Command c);
 
         void update(GameActor actor);
 

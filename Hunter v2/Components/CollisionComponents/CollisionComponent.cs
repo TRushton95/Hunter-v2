@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hunter_v2.GameObjects;
+using Hunter_v2.Components.GameActorStates.RecoveryStates;
 
 namespace Hunter_v2.Components.CollisionComponents
 {
@@ -21,7 +22,14 @@ namespace Hunter_v2.Components.CollisionComponents
         //MISSING - what to do with collision action once recieved
         public void RecieveCollisionAction(CollisionAction collisionAction, GameActor actor)
         {
-            collisionAction.execute(actor);
+
+            IGameActorRecoveryState newRecoveryState = actor.recoveryState.processInput(actor, collisionAction);
+            if (newRecoveryState != null)
+            {
+                actor.recoveryState.exit(actor);
+                actor.recoveryState = newRecoveryState;
+                actor.recoveryState.enter(actor);
+            }
         }
 
         public CollisionAction SendCollisionAction()

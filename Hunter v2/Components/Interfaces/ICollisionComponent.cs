@@ -10,7 +10,6 @@ namespace Hunter_v2.Components.Interfaces
 {
     interface ICollisionComponent
     {
-        CollisionAction collisionAction { get; set; }
 
         void RecieveCollisionAction(CollisionAction action, GameActor actor);
 

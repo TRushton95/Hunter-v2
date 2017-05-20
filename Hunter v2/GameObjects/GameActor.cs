@@ -1,4 +1,5 @@
 ﻿using Hunter_v2.Commands;
+using Hunter_v2.Components.CollisionComponents;
 using Hunter_v2.Components.GameActorStates;
 using Hunter_v2.Components.GameActorStates.ControlStates;
 using Hunter_v2.Components.GameActorStates.RecoveryStates;
@@ -24,7 +25,7 @@ namespace Hunter_v2.GameObjects
         public IWeaponComponent weaponComponent { get; set; }
         public IDirectionComponent directionComponent { get; set; }
         public ICollisionComponent collisionComponet { get; set; }
-        public List<ICommand> inputCommands { get; set; }
+        public List<Command> inputCommands { get; set; }
         public IGameActorControlState controlState { get; set; }
         public IGameActorRecoveryState recoveryState { get; set; }
         public IGameActorControlState newControlState { get; set; }
@@ -55,7 +56,7 @@ namespace Hunter_v2.GameObjects
 
             inputCommands = inputComponent.processInput();
 
-            foreach (ICommand c in inputCommands)
+            foreach (Command c in inputCommands)
             {
                 newControlState = controlState.processInput(this, c);
                 if (newControlState != null)
@@ -66,17 +67,10 @@ namespace Hunter_v2.GameObjects
                 }
             }
 
+            controlState.update(this);
+            recoveryState.update(this);
+
             movementComponent.move(positionComponent);
-
-            //MISSING - logic to exchange CollisionActions based on collision
-
-            newRecoveryState = recoveryState.processInput(this);
-            if (newRecoveryState != null)
-            {
-                recoveryState.exit(this);
-                recoveryState = newRecoveryState;
-                recoveryState.enter(this);
-            }
 
             healthComponent.deathCheck();
         }

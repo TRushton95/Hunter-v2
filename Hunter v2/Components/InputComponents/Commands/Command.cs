@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hunter_v2.Commands
 {
-    interface ICommand
+    interface Command
     {
         void execute(GameActor gameObject);
 

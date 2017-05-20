@@ -7,6 +7,7 @@ using System.Diagnostics;
 using Hunter_v2.GameObjects;
 using Hunter_v2.Components.GameActorStates.ControlStates;
 using Hunter_v2.Components.GameActorStates.RecoveryStates;
+using Hunter_v2.Components.CollisionComponents;
 
 namespace Hunter_v2.Components.GameActorStates
 {
@@ -18,21 +19,22 @@ namespace Hunter_v2.Components.GameActorStates
         public HitState()
         {
             timer = new Stopwatch();
-            recoveryTime = 1000; //2 seconds
+            recoveryTime = 1000; //1 seconds
         }
 
-        public IGameActorRecoveryState processInput(GameActor actor)
+        public IGameActorRecoveryState processInput(GameActor actor, CollisionAction action)
         {
-            if (timer.ElapsedMilliseconds >= recoveryTime)
-            {
-                return new UnharmedState();
-            }
             return null;
         }
 
         public void update(GameActor actor)
         {
-            //should be state specific logic here
+            if (timer.ElapsedMilliseconds >= recoveryTime)
+            {
+                exit(actor);
+                actor.recoveryState = new UnharmedState();
+                enter(actor);
+            }
         }
 
         public void enter(GameActor actor)

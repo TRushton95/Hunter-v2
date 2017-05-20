@@ -21,7 +21,7 @@ namespace Hunter_v2.Components.GameActorStates.ControlStates
             recoveryTime = 500;
         }
 
-        public IGameActorControlState processInput(GameActor actor, ICommand c)
+        public IGameActorControlState processInput(GameActor actor, Command c)
         {
             if (c.commandType() != "Fire")
             {

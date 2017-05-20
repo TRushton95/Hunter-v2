@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Hunter_v2.Commands
 {
-    class MoveRightCommand : ICommand
+    class MoveRightCommand : Command
     {
         public void execute(GameActor gameObject)
         {
-            gameObject.positionComponent.posX += 5;
+            gameObject.directionComponent.faceRight();
+            gameObject.movementComponent.velX = 5;
         }
 
         public string commandType()

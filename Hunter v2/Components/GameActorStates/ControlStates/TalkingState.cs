@@ -10,7 +10,7 @@ namespace Hunter_v2.Components.GameActorStates.ControlStates
 {
     class TalkingState : IGameActorControlState
     {
-        public IGameActorControlState processInput(GameActor actor, ICommand c)
+        public IGameActorControlState processInput(GameActor actor, Command c)
         {
             return null;
         }
