@@ -11,7 +11,9 @@ namespace Hunter_v2.Components.GraphicsComponents
 {
     class NullGraphicsComponent : IGraphicsComponent
     {
+        public SpriteFont font { get; set; }
         public Texture2D texture { get; set; }
+
         public SpriteBatch spriteBatch { get; set; }
 
         public NullGraphicsComponent()
@@ -23,6 +25,11 @@ namespace Hunter_v2.Components.GraphicsComponents
         public void draw(Vector2 position)
         {
             
+        }
+
+        public void draw(Vector2 position, string namePlate)
+        {
+
         }
     }
 }

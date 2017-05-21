@@ -77,7 +77,13 @@ namespace Hunter_v2.GameObjects
 
         public void draw(Vector2 offset)
         {
-            graphicsComponent.draw(positionComponent.position() - offset);
+            string namePlate = "";
+            if (healthComponent.maxHealth >= 0)
+            {
+                namePlate = healthComponent.currentHealth + "/" + healthComponent.maxHealth;
+            }
+
+            graphicsComponent.draw(positionComponent.position() - offset, namePlate);
         }
 
     }

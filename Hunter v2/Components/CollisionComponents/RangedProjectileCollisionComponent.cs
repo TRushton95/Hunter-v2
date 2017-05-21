@@ -4,37 +4,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Hunter_v2.Components.CollisionComponents;
 using Hunter_v2.GameObjects;
 
-namespace Hunter_v2.Components
+namespace Hunter_v2.Components.CollisionComponents
 {
-    class NullCollisionComponent : ICollisionComponent
+    class RangedProjectileCollisionComponent : ICollisionComponent
     {
         public bool transient { get; set; }
 
         public CollisionAction collisionAction { get; set; }
 
-        public NullCollisionComponent()
+        public RangedProjectileCollisionComponent(CollisionAction collisionAction)
         {
-            //MISSING - needs to be a null component
-            collisionAction = null;
+            this.collisionAction = collisionAction;
+            this.transient = true;
         }
 
         public void RecieveCollisionAction(CollisionAction action, GameActor actor)
         {
-            
+
         }
 
         public CollisionAction SendCollisionAction()
         {
-            //MISSING - needs to return 
-            return null;
+            return collisionAction;
         }
 
         public void onCollide(GameActor actor)
         {
-
+            actor.healthComponent.isDead = true;
         }
     }
 }

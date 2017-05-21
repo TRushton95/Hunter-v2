@@ -11,8 +11,12 @@ namespace Hunter_v2.Components.Interfaces
     interface ICollisionComponent
     {
 
+        bool transient { get; set; }
+
         void RecieveCollisionAction(CollisionAction action, GameActor actor);
 
         CollisionAction SendCollisionAction();
+
+        void onCollide(GameActor actor);
     }
 }

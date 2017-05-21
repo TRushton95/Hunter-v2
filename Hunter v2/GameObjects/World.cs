@@ -63,6 +63,15 @@ namespace Hunter_v2.GameObjects
                         if (Collision.collisionCheck(gameActors[i].positionComponent, gameActors[i].sizeComponent,
                             gameActors[j].positionComponent, gameActors[j].sizeComponent)) {
                             //logic here
+                            //call onCollision logic here, within relation check
+
+                            gameActors[i].collisionComponet.onCollide(gameActors[i]);
+                            gameActors[j].collisionComponet.onCollide(gameActors[j]);
+
+                            //why does enemy have velocity here?
+                            resolveCollisionPositions(gameActors[i].positionComponent, gameActors[i].movementComponent, gameActors[i].sizeComponent,
+                                                gameActors[j].positionComponent, gameActors[j].movementComponent, gameActors[j].sizeComponent);
+
                         }
 
                     }
@@ -73,12 +82,19 @@ namespace Hunter_v2.GameObjects
             if (Collision.collisionCheck(gameActors[0].positionComponent, gameActors[0].sizeComponent, map[0,0].positionComponent, map[0,0].sizeComponent))
             {
                 //gameActors[0].collisionComponet.RecieveCollisionAction(map[0,0].collisionComponent.SendCollisionAction(), gameActors[0]); //player recieving collisionAction from top-left tile
-
-                resolveCollision(gameActors[0].positionComponent, gameActors[0].movementComponent, gameActors[0].sizeComponent,
+                resolveCollisionPositions(gameActors[0].positionComponent, gameActors[0].movementComponent, gameActors[0].sizeComponent,
                             map[0,0].positionComponent, new NullMovementComponent(), map[0, 0].sizeComponent);
             }
 
             camera.update();
+
+            for (int i = 0; i < gameActors.Count; i++)
+            {
+                if (gameActors[i].healthComponent.isDead)
+                {
+                    gameActors.RemoveAt(i);
+                }
+            }
         }
 
         public void draw()
@@ -113,7 +129,7 @@ namespace Hunter_v2.GameObjects
                 for (int j = 0; j < mapSize.Y; j++)
                 {
                     //MISSING - proper assignment logic here
-                    map[i, j] = new Tile(sizeComponent, new PositionComponent(i * 50, j * 50), new CollisionComponent(new DamageCollisionAction(5)), matchTileImg(tileSet, mapSource[i, j]), mapSource[i, j]);
+                    map[i, j] = new Tile(sizeComponent, new PositionComponent(i * 50, j * 50), new PlayerCollisionComponent(new DamageCollisionAction(5)), matchTileImg(tileSet, mapSource[i, j]), mapSource[i, j]);
                 }
             }
 
@@ -137,29 +153,43 @@ namespace Hunter_v2.GameObjects
 
         private void boundaryCheck(GameActor gameActor)
         {
+            bool collided = false;
+
             if (gameActor.positionComponent.posX < 0)
             {
                 gameActor.positionComponent.posX = 0;
+                collided = true;
             }
             if (gameActor.positionComponent.posY < 0)
             {
                 gameActor.positionComponent.posY = 0;
+                collided = true;
             }
             if (gameActor.positionComponent.posX > mapSize.X - gameActor.sizeComponent.width)
             {
                 gameActor.positionComponent.posX = mapSize.X - gameActor.sizeComponent.width;
+                collided = true;
             }
             if (gameActor.positionComponent.posY > mapSize.Y - gameActor.sizeComponent.height)
             {
                 gameActor.positionComponent.posY = mapSize.Y - gameActor.sizeComponent.height;
+                collided = true;
+            }
+
+            if (collided)
+            {
+
+                gameActor.collisionComponet.onCollide(gameActor);
             }
         }
 
-        private void resolveCollision(IPositionComponent p1, IMovementComponent m1, ISizeComponent s1, IPositionComponent p2, IMovementComponent m2, ISizeComponent s2)
+        private void resolveCollisionPositions(IPositionComponent p1, IMovementComponent m1, ISizeComponent s1, IPositionComponent p2, IMovementComponent m2, ISizeComponent s2)
         {
             int side = calculateRelativePosition(p1, s1, p2, s2);
             float overlap = 0;
 
+            //BUG - these sides are wrong but this now works, needs investigating
+            //Changing left and button fixed top and right
             if (side == 0) //top
             {
                 overlap = (p2.posY + s2.height) - p1.posY;
@@ -174,8 +204,8 @@ namespace Hunter_v2.GameObjects
                 overlap = (p1.posX + s1.width) - p2.posX;
                 if (overlap != 0)
                 {
-                    p1.posX += (overlap / m1.velX + m2.velX) * m1.velX;
-                    p2.posX -= (overlap / m1.velX + m2.velX) * m2.velX;
+                    p1.posX -= (overlap / m1.velX + m2.velX) * m1.velX;
+                    p2.posX += (overlap / m1.velX + m2.velX) * m2.velX;
                 }
             }
             else if (side == 2) //bottom
@@ -183,8 +213,8 @@ namespace Hunter_v2.GameObjects
                 overlap = (p1.posY + s1.height) - p2.posY;
                 if (overlap != 0)
                 {
-                    p1.posY += (overlap / m1.velY + m2.velY) * m1.velY;
-                    p2.posY -= (overlap / m1.velY + m2.velY) * m2.velY;
+                    p1.posY -= (overlap / m1.velY + m2.velY) * m1.velY;
+                    p2.posY += (overlap / m1.velY + m2.velY) * m2.velY;
                 }
             }
             else if (side == 3) //right

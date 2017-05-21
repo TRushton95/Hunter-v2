@@ -43,7 +43,8 @@
   <ItemGroup>
     <Compile Include="Components\CollisionComponents\CollisionActions\CollisionAction.cs" />
     <Compile Include="Components\CollisionComponents\CollisionActions\DamageCollisionAction.cs" />
-    <Compile Include="Components\CollisionComponents\CollisionComponent.cs" />
+    <Compile Include="Components\CollisionComponents\PlayerProjectileCollisionComponent.cs" />
+    <Compile Include="Components\CollisionComponents\RangedProjectileCollisionComponent.cs" />
     <Compile Include="Components\DirectionComponents\DirectionComponent.cs" />
     <Compile Include="Components\DirectionComponents\NullDirectionComponent.cs" />
     <Compile Include="Components\GameActorStates\ControlStates\FiringState.cs" />
@@ -105,9 +106,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\BlueTile.png" />
+    <Content Include="Content\EmptyTile.png" />
     <Content Include="Content\GreenTile.png" />
     <Content Include="Content\PurpleTile.png" />
     <Content Include="Content\RedTile.png" />
+    <Content Include="Content\SmallGreyTile.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

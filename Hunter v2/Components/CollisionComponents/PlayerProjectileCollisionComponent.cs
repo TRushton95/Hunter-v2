@@ -9,14 +9,17 @@ using Hunter_v2.Components.GameActorStates.RecoveryStates;
 
 namespace Hunter_v2.Components.CollisionComponents
 {
-    class CollisionComponent : ICollisionComponent
+    class PlayerCollisionComponent : ICollisionComponent
     {
+        public bool transient { get; set; }
+
         public CollisionAction collisionAction { get; set; }
 
         //constructor
-        public CollisionComponent(CollisionAction collisionAction)
+        public PlayerCollisionComponent(CollisionAction collisionAction)
         {
             this.collisionAction = collisionAction;
+            this.transient = false;
         }
 
         //MISSING - what to do with collision action once recieved
@@ -35,6 +38,11 @@ namespace Hunter_v2.Components.CollisionComponents
         public CollisionAction SendCollisionAction()
         {
             return collisionAction;
+        }
+
+        public void onCollide(GameActor actor)
+        {
+
         }
     }
 }

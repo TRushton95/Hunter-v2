@@ -34,29 +34,41 @@ namespace Hunter_v2.Components.WeaponComponents
             //UNSURE - this will certainly work when tied together with states, in this how we want to approach it though? needs thouught
             float velX = 0;
             float velY = 0;
+            int width = 20;
+            int height = 20;
+            float posX = 0;
+            float posY = 0;
 
             if (gameObject.directionComponent.currentDirection == 0) {
                 velY = -10;
+                posX = gameObject.positionComponent.posX + (gameObject.sizeComponent.width/2) - (width/2);
+                posY = gameObject.positionComponent.posY - height;
             }
             else if (gameObject.directionComponent.currentDirection == 1)
             {
                 velX = -10;
+                posX = gameObject.positionComponent.posX - width;
+                posY = gameObject.positionComponent.posY + (gameObject.sizeComponent.height/2) - (height/2);
             }
             else if (gameObject.directionComponent.currentDirection == 2)
             {
                 velY = 10;
+                posX = gameObject.positionComponent.posX + (gameObject.sizeComponent.width/2) - (width/2);
+                posY = gameObject.positionComponent.posY + gameObject.sizeComponent.height;
             }
             else if (gameObject.directionComponent.currentDirection == 3)
             {
                 velX = 10;
+                posX = gameObject.positionComponent.posX + gameObject.sizeComponent.width;
+                posY = gameObject.positionComponent.posY + (gameObject.sizeComponent.height/2) - (height/2);
             }
 
             // UNSURE - it seems that a new position must be created as using gameObjects passes the value byreference rather than byvalue, needs more investigation
             PositionComponent positionComponent = new PositionComponent(gameObject.positionComponent.posX, gameObject.positionComponent.posY);
             //needs some proper allocation here - purely standin for now
-            GameActor projectile = new GameActor(graphicsComponent, new NullInputComponent(), new SizeComponent(50,50),
-                positionComponent, new MovementComponent(), new NullHealthComponent(), new NullWeaponComponent(),
-                new DirectionComponent(gameObject.directionComponent.currentDirection), new CollisionComponent(new DamageCollisionAction(5)));
+            GameActor projectile = new GameActor(graphicsComponent, new NullInputComponent(), new SizeComponent(width, height),
+                new PositionComponent(posX, posY), new MovementComponent(), new NullHealthComponent(), new NullWeaponComponent(),
+                new DirectionComponent(gameObject.directionComponent.currentDirection), new RangedProjectileCollisionComponent(new DamageCollisionAction(5)));
             // REMOVE - requires logic to fire in current facing direction - hopefully implemented with states?
             projectile.movementComponent.velY = velY;
             projectile.movementComponent.velX = velX;
