@@ -1,4 +1,5 @@
 ﻿using Hunter_v2.Commands;
+using Hunter_v2.Components;
 using Hunter_v2.Components.CollisionComponents;
 using Hunter_v2.Components.GameActorStates;
 using Hunter_v2.Components.GameActorStates.ControlStates;
@@ -25,6 +26,7 @@ namespace Hunter_v2.GameObjects
         public IWeaponComponent weaponComponent { get; set; }
         public IDirectionComponent directionComponent { get; set; }
         public ICollisionComponent collisionComponet { get; set; }
+        public IConversationComponent conversationComponent { get; set; }
         public List<Command> inputCommands { get; set; }
         public IGameActorControlState controlState { get; set; }
         public IGameActorRecoveryState recoveryState { get; set; }
@@ -35,7 +37,7 @@ namespace Hunter_v2.GameObjects
                 ISizeComponent sizeComponent, IPositionComponent positionComponent, 
                 IMovementComponent movementComponent, IHealthComponent healthComponent, 
                 IWeaponComponent weaponComponent, IDirectionComponent directionComponent,
-                ICollisionComponent collisionComponet)
+                ICollisionComponent collisionComponet, IConversationComponent conversationComponent)
         {
             this.graphicsComponent = graphicsComponent;
             this.inputComponent = inputComponent;
@@ -46,6 +48,7 @@ namespace Hunter_v2.GameObjects
             this.weaponComponent = weaponComponent;
             this.directionComponent = directionComponent;
             this.collisionComponet = collisionComponet;
+            this.conversationComponent = conversationComponent;
 
             this.controlState = new WalkingState();
             this.recoveryState = new UnharmedState();

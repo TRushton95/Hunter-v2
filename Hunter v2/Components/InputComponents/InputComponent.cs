@@ -22,6 +22,7 @@ namespace Hunter_v2.Components.InputComponents
         public Command keyDownA { get; set; }
         public Command keyDownS { get; set; }
         public Command keyDownD { get; set; }
+        public Command keyDownT { get; set; }
         public Command keyUpW { get; set; }
         public Command keyUpA { get; set; }
         public Command keyUpS { get; set; }
@@ -36,6 +37,7 @@ namespace Hunter_v2.Components.InputComponents
             keyDownA = new MoveLeftCommand();
             keyDownS = new MoveDownCommand();
             keyDownD = new MoveRightCommand();
+            keyDownT = new TalkCommand();
             keyUpW = new StopVerticalCommand();
             keyUpA = new StopHorizontalCommand();
             keyUpS = new StopVerticalCommand();
@@ -63,6 +65,10 @@ namespace Hunter_v2.Components.InputComponents
             }
             if (currentKeyboardState.IsKeyDown(Keys.D)) {
                 commands.Add(keyDownD);
+            }
+            if (currentKeyboardState.IsKeyDown(Keys.T))
+            {
+                commands.Add(keyDownT);
             }
 
             //if any keys have been released

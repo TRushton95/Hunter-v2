@@ -1,5 +1,6 @@
 ﻿using Hunter_v2.Components.CollisionComponents;
 using Hunter_v2.Components.CollisionComponents.CollisionActions;
+using Hunter_v2.Components.ConversationComponents;
 using Hunter_v2.Components.Interfaces;
 using Hunter_v2.Components.movementComponents;
 using Hunter_v2.Components.MovementComponents;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Hunter_v2.GameObjects
 {
-    class World : IObserver<GameActor>
+    class World : IObserver<GameActor>, IObserver<Tuple<float, float, float, float>>
     {
         public Vector2 mapSize { get; set; }
         public TileImg[] tileSet { get; set; }
@@ -22,8 +23,12 @@ namespace Hunter_v2.GameObjects
         public List<GameActor> gameActors { get; set; }
         public Tile[,] map { get; set; }
         public Camera camera { get; set; }
+        public Dictionary<Tuple<GameActor, GameActor>, int> alliances { get; set; }
+        public enum relationship { HOSTILE, NEUTRAL, ALLY };
+        public Conversation conversation { get; set; }
 
-        List<IDisposable> cancelObservation;
+        List<IDisposable> projectileObserver;
+        List<IDisposable> talkFieldObserver;
 
         public World(Vector2 mapSize, TileImg[] tileSet, int[,] mapSource, List<GameActor> gameActors)
         {
@@ -31,17 +36,28 @@ namespace Hunter_v2.GameObjects
             this.tileSet = tileSet;
             this.mapSource = mapSource;
             map = loadMap();
-
+            
             this.gameActors = gameActors;
+            alliances = new Dictionary<Tuple<GameActor, GameActor>, int>();
+
+            conversation = null;
+
+            this.addActor(gameActors[0]);
+            this.addActor(gameActors[1]);
+            this.addActor(gameActors[2]);
             //MISSING - proper logic to assign width and height of world and camera
             this.camera = new Camera(0, 0, 800, 480 ,1200, 800);
             this.camera.setTarget(this.gameActors[0]);
 
-            cancelObservation = new List<IDisposable>();
+            projectileObserver = new List<IDisposable>();
+            talkFieldObserver = new List<IDisposable>();
+
             foreach (GameActor g in gameActors)
             {
-                cancelObservation.Add(g.weaponComponent.Subscribe(this));
+                projectileObserver.Add(g.weaponComponent.Subscribe(this));
             }
+
+            talkFieldObserver.Add(gameActors[0].conversationComponent.Subscribe(this));
         }
 
         public void update()
@@ -65,13 +81,19 @@ namespace Hunter_v2.GameObjects
                             //logic here
                             //call onCollision logic here, within relation check
 
+                            //individual collision effects
                             gameActors[i].collisionComponet.onCollide(gameActors[i]);
                             gameActors[j].collisionComponet.onCollide(gameActors[j]);
 
-                            //why does enemy have velocity here?
-                            resolveCollisionPositions(gameActors[i].positionComponent, gameActors[i].movementComponent, gameActors[i].sizeComponent,
-                                                gameActors[j].positionComponent, gameActors[j].movementComponent, gameActors[j].sizeComponent);
+                            //joint collision resolution
+                            if (alliances[Tuple.Create(gameActors[i], gameActors[j])] == (int)relationship.NEUTRAL)
+                            {
+                                resolveCollisionPositions(gameActors[i].positionComponent, gameActors[i].movementComponent, gameActors[i].sizeComponent,
+                                                    gameActors[j].positionComponent, gameActors[j].movementComponent, gameActors[j].sizeComponent);
 
+                                gameActors[i].collisionComponet.RecieveCollisionAction(gameActors[j].collisionComponet.SendCollisionAction(), gameActors[i]);
+                                gameActors[j].collisionComponet.RecieveCollisionAction(gameActors[i].collisionComponet.SendCollisionAction(), gameActors[i]);
+                            }
                         }
 
                     }
@@ -267,14 +289,23 @@ namespace Hunter_v2.GameObjects
             return direction;
         }
 
+        public void addActor(GameActor actor)
+        {
+            for (int i = 0; i < gameActors.Count(); i++)
+            {
+                alliances.Add(Tuple.Create(gameActors[i], actor), (int)relationship.NEUTRAL);
+            }
+        }
 
 
 
-        //MISSING
+
+        //Projectile observer
         public void OnNext(GameActor gameActor)
         {
             gameActors.Add(gameActor);
-            cancelObservation.Add(gameActor.weaponComponent.Subscribe(this));
+            addActor(gameActor);
+            projectileObserver.Add(gameActor.weaponComponent.Subscribe(this));
         }
 
         public void OnError(Exception error)
@@ -285,6 +316,30 @@ namespace Hunter_v2.GameObjects
         public void OnCompleted()
         {
             
+        }
+
+        //Talking field observer
+        public void OnNext(Tuple<float, float, float, float> value)
+        {
+            PositionComponent talkingFieldPos = new PositionComponent(value.Item1, value.Item2);
+            SizeComponent talkingFieldSize = new SizeComponent((int)value.Item3, (int)value.Item4);
+            List<int> actorsInRange = new List<int>();
+
+            foreach (GameActor g in gameActors)
+            {
+                if (Collision.collisionCheck(g.positionComponent, g.sizeComponent, talkingFieldPos, talkingFieldSize))
+                {
+                    actorsInRange.Add(gameActors.IndexOf(g));
+                }
+            }
+
+            if (actorsInRange.Count > 1) //including player
+            {
+                //find closest
+            }
+
+            conversation = new Conversation(gameActors[0], gameActors[actorsInRange[0]]);
+            conversation.start();
         }
     }
 }

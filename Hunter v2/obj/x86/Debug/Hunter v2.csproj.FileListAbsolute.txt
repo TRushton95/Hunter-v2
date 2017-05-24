@@ -51,3 +51,4 @@ C:\GitHub\Hunter-v2\Hunter v2\obj\x86\Debug\Hunter v2.pdb
 C:\GitHub\Hunter-v2\Hunter v2\obj\x86\Debug\Hunter v2.csprojResolveAssemblyReference.cache
 C:\GitHub\Hunter-v2\Hunter v2\bin\Windows\x86\Debug\Content\Font.xnb
 C:\GitHub\Hunter-v2\Hunter v2\bin\Windows\x86\Debug\Content\SmallGreyTile.xnb
+C:\GitHub\Hunter-v2\Hunter v2\bin\Windows\x86\Debug\Content\YellowTile.xnb

@@ -45,6 +45,10 @@
     <Compile Include="Components\CollisionComponents\CollisionActions\DamageCollisionAction.cs" />
     <Compile Include="Components\CollisionComponents\PlayerProjectileCollisionComponent.cs" />
     <Compile Include="Components\CollisionComponents\RangedProjectileCollisionComponent.cs" />
+    <Compile Include="Components\ConversationComponents\Conversation.cs" />
+    <Compile Include="Components\ConversationComponents\ConversationComponent.cs" />
+    <Compile Include="Components\ConversationComponents\DialogueTree.cs" />
+    <Compile Include="Components\ConversationComponents\NullConversationComponent.cs" />
     <Compile Include="Components\DirectionComponents\DirectionComponent.cs" />
     <Compile Include="Components\DirectionComponents\NullDirectionComponent.cs" />
     <Compile Include="Components\GameActorStates\ControlStates\FiringState.cs" />
@@ -57,6 +61,7 @@
     <Compile Include="Components\GraphicsComponents\GraphicsComponent.cs" />
     <Compile Include="Components\GraphicsComponents\NullGraphicsComponent.cs" />
     <Compile Include="Components\HealthComponents\NullHealthComponent.cs" />
+    <Compile Include="Components\Interfaces\IConversationComponent.cs" />
     <Compile Include="Components\InputComponents\Commands\FireCommand.cs" />
     <Compile Include="Components\InputComponents\Commands\Command.cs" />
     <Compile Include="Components\InputComponents\Commands\MoveDownCommand.cs" />
@@ -67,6 +72,7 @@
     <Compile Include="Components\HealthComponents\HealthComponent.cs" />
     <Compile Include="Components\InputComponents\Commands\StopHorizontalCommand.cs" />
     <Compile Include="Components\InputComponents\Commands\StopVerticalCommand.cs" />
+    <Compile Include="Components\InputComponents\Commands\TalkCommand.cs" />
     <Compile Include="Components\InputComponents\InputComponent.cs" />
     <Compile Include="Components\InputComponents\NullInputComponent.cs" />
     <Compile Include="Components\Interfaces\ICollisionComponent.cs" />
@@ -89,6 +95,8 @@
     <Compile Include="Components\WeaponComponents\RangedWeaponComponent.cs" />
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\Collision.cs" />
+    <Compile Include="GameObjects\Quests\Quest.cs" />
+    <Compile Include="GameObjects\Quests\QuestManager.cs" />
     <Compile Include="GameObjects\Tile.cs" />
     <Compile Include="GameObjects\TileImg.cs" />
     <Compile Include="GameObjects\World.cs" />
@@ -105,12 +113,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Components\ConversationComponents\Dialogue\NPCDialogue.txt" />
     <Content Include="Content\BlueTile.png" />
     <Content Include="Content\EmptyTile.png" />
     <Content Include="Content\GreenTile.png" />
     <Content Include="Content\PurpleTile.png" />
     <Content Include="Content\RedTile.png" />
     <Content Include="Content\SmallGreyTile.png" />
+    <Content Include="Content\YellowTile.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

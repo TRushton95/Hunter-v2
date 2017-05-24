@@ -1,0 +1,4 @@
+﻿<0>For the king we will ride to the dark galactic skies!</0>
+<1>To defeat the foes when the Chaos Wizards rise!</1>
+<2>Now the universe will burn, Evil sorcerer returns...</2>
+<3>Tragic fate rages tonight, Chaos Wizards rise!</3>

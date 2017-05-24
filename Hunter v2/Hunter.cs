@@ -1,6 +1,7 @@
 ﻿using Hunter_v2.Components;
 using Hunter_v2.Components.CollisionComponents;
 using Hunter_v2.Components.CollisionComponents.CollisionActions;
+using Hunter_v2.Components.ConversationComponents;
 using Hunter_v2.Components.DirectionComponents;
 using Hunter_v2.Components.HealthComponents;
 using Hunter_v2.Components.InputComponents;
@@ -32,7 +33,7 @@ namespace Hunter_v2
         SpriteBatch spriteBatch;
 
         //REMOVE
-        Texture2D playerSprite, projectileSprite, redTileTexture, blueTileTexture, greenTileTexture;
+        Texture2D playerSprite, projectileSprite, redTileTexture, blueTileTexture, greenTileTexture, yellowTileTexture;
         SpriteFont font;
         List<GameActor> gameActors;
         GameActor player, enemy, npc;
@@ -59,14 +60,19 @@ namespace Hunter_v2
 
             //REMOVE
             player = new GameActor(new GraphicsComponent(playerSprite, spriteBatch, font), new InputComponent(), 
-                    new SizeComponent(50,50), new PositionComponent(200,200), new MovementComponent(), 
+                    new SizeComponent(50,50), new PositionComponent(300,200), new MovementComponent(), 
                     new HealthComponent(10), new RangedWeaponComponent(new GraphicsComponent(playerSprite,spriteBatch, font)), 
-                    new DirectionComponent(), new PlayerCollisionComponent(new DamageCollisionAction(0)));
+                    new DirectionComponent(), new PlayerCollisionComponent(new DamageCollisionAction(0)), new ConversationComponent());
 
             enemy = new GameActor(new GraphicsComponent(redTileTexture, spriteBatch, font), new NullInputComponent(),
-                    new SizeComponent(50, 50), new PositionComponent(400, 300), new MovementComponent(),
+                    new SizeComponent(50, 50), new PositionComponent(500, 300), new MovementComponent(),
                     new HealthComponent(10), new RangedWeaponComponent(new GraphicsComponent(redTileTexture, spriteBatch, font)),
-                    new DirectionComponent(), new PlayerCollisionComponent(new DamageCollisionAction(1)));
+                    new DirectionComponent(), new PlayerCollisionComponent(new DamageCollisionAction(1)), new NullConversationComponent());
+
+            npc = new GameActor(new GraphicsComponent(yellowTileTexture, spriteBatch, font), new NullInputComponent(),
+                    new SizeComponent(50, 50), new PositionComponent(125, 125), new MovementComponent(),
+                    new HealthComponent(10), new RangedWeaponComponent(new GraphicsComponent(yellowTileTexture, spriteBatch, font)),
+                    new DirectionComponent(), new PlayerCollisionComponent(new DamageCollisionAction(0)), new NullConversationComponent());
 
             tileSet = new TileImg[]
             {
@@ -94,6 +100,7 @@ namespace Hunter_v2
             gameActors = new List<GameActor>();
             gameActors.Add(player);
             gameActors.Add(enemy);
+            gameActors.Add(npc);
 
             world = new World(mapSize, tileSet, mapSource, gameActors);
 
@@ -115,6 +122,7 @@ namespace Hunter_v2
             font = Content.Load<SpriteFont>("Font");
             player.graphicsComponent.font = font;
             enemy.graphicsComponent.font = font;
+            npc.graphicsComponent.font = font;
 
             playerSprite = Content.Load<Texture2D>("PurpleTile");
             player.graphicsComponent.texture = playerSprite;
@@ -124,6 +132,10 @@ namespace Hunter_v2
             player.weaponComponent.graphicsComponent.texture = projectileSprite;
             player.weaponComponent.graphicsComponent.spriteBatch = spriteBatch;
             player.weaponComponent.graphicsComponent.font = font;
+
+            yellowTileTexture = Content.Load<Texture2D>("YellowTile");
+            npc.graphicsComponent.texture = yellowTileTexture;
+            npc.graphicsComponent.spriteBatch = spriteBatch;
 
             redTileTexture = Content.Load<Texture2D>("RedTile");
             enemy.graphicsComponent.texture = redTileTexture;
