@@ -95,8 +95,10 @@
     <Compile Include="Components\WeaponComponents\RangedWeaponComponent.cs" />
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\Collision.cs" />
+    <Compile Include="GameObjects\QuestManager.cs" />
+    <Compile Include="GameObjects\Quests\HealthQuest.cs" />
     <Compile Include="GameObjects\Quests\Quest.cs" />
-    <Compile Include="GameObjects\Quests\QuestManager.cs" />
+    <Compile Include="GameObjects\Quests\SpeedQuest.cs" />
     <Compile Include="GameObjects\Tile.cs" />
     <Compile Include="GameObjects\TileImg.cs" />
     <Compile Include="GameObjects\World.cs" />

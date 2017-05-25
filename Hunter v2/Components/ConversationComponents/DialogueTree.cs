@@ -1,4 +1,5 @@
 ﻿using Hunter_v2.GameObjects;
+using Hunter_v2.GameObjects.Quests;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,26 +11,38 @@ namespace Hunter_v2.Components.ConversationComponents
 {
     class DialogueTree
     {
-        List<Quest> quests;
-        string dialogue;
-        int node, endNode;
+        public List<Quest> quests { get; set; }
+        public string dialogue { get; set; }
+        public int node { get; set; }
 
         public DialogueTree(string dialogue)
         {
             this.dialogue = dialogue;
             quests = new List<Quest>();
             node = 0;
-            endNode = 0;
         }
 
-        public string read(int node)
+        //super inefficient
+        public string read()
         {
             string speech;
             string openTag = "<" + node + ">";
-            string closeTag = "<" + node + "/>";
+            string closeTag = "</" + node + ">";
 
             int openTagPos = dialogue.IndexOf(openTag);
             int closeTagPos = dialogue.IndexOf(closeTag);
+
+            if (openTagPos == -1)
+            {
+                while (openTagPos == -1)
+                {
+                    previous();
+                    openTag = "<" + node + ">";
+                    closeTag = "</" + node + ">";
+                    openTagPos = dialogue.IndexOf(openTag);
+                    closeTagPos = dialogue.IndexOf(closeTag);
+                }
+            }
 
             speech = dialogue.Substring(openTagPos + openTag.Length, closeTagPos - (openTagPos + openTag.Length));
 
@@ -44,19 +57,20 @@ namespace Hunter_v2.Components.ConversationComponents
 
         public void previous()
         {
-            node--;
+            if (node > 0)
+            {
+                node--;
+            }
         }
 
         public Quest giveQuest()
         {
             foreach (Quest q in quests)
             {
-                /*
-                if (q.id == node)
+                if (q.dialogueId == node)
                 {
                     return q;
                 }
-                */
             }
 
             return null;

@@ -333,13 +333,16 @@ namespace Hunter_v2.GameObjects
                 }
             }
 
-            if (actorsInRange.Count > 1) //including player
+            if (actorsInRange.Count > 2) //including player
             {
                 //find closest
             }
 
-            conversation = new Conversation(gameActors[0], gameActors[actorsInRange[0]]);
-            conversation.start();
+            if (actorsInRange.Count == 2)
+            {
+                conversation = new Conversation(gameActors[0], gameActors[actorsInRange[0]]);
+                conversation.start();
+            }
         }
     }
 }

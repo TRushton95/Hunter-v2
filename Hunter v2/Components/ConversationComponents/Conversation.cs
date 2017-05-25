@@ -3,6 +3,7 @@ using Hunter_v2.Components.GameActorStates.ControlStates;
 using Hunter_v2.GameObjects;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,11 @@ namespace Hunter_v2.Components.ConversationComponents
             g2.controlState.exit(g2);
             g2.controlState = new TalkingState();
             g2.controlState.enter(g2);
+
+            g2.conversationComponent.dialogueTree.giveQuest();
+
+            Debug.WriteLine(g2.conversationComponent.dialogueTree.read());
+            g2.conversationComponent.dialogueTree.next();
         }
 
         public void end()

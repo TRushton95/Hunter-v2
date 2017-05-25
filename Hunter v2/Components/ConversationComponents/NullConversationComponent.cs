@@ -10,6 +10,7 @@ namespace Hunter_v2.Components.ConversationComponents
     class NullConversationComponent : IConversationComponent
     {
         public IObserver<Tuple<float, float, float, float>> observer { get; set; }
+        public DialogueTree dialogueTree { get; set; }
 
         public void Initiate(GameActor actor)
         {
